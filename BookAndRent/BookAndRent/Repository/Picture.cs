@@ -11,5 +11,6 @@ namespace BookAndRent.Repository
         public int PictureId { get; set; }
         public int ApartmentId { get; set; }
         public byte[] PictureBytes { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

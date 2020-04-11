@@ -11,5 +11,6 @@ namespace BookAndRent.Repository
         public int FacilityId { get; set; }
         public string Title { get; set; }
         public List<ApartmentFacility> ApartmentFacilities { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

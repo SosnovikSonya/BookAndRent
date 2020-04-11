@@ -22,5 +22,6 @@ namespace BookAndRent.Repository
         public List<Contract> Contracts { get; set; }
         public int UserId { get; set; }
         public List<ApartmentFacility> ApartmentFacilities { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

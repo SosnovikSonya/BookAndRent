@@ -15,6 +15,6 @@ namespace BookAndRent.Repository
         public string Password { get; set; }
         public List<Apartment> Apartments { get; set; }
         public List<Comment> Comments { get; set; }
-        //public List<Contract> Contracts { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

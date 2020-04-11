@@ -17,5 +17,6 @@ namespace BookAndRent.Repository
         public DateTime ContractDate { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
