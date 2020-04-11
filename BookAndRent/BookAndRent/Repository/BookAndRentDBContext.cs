@@ -20,6 +20,7 @@ namespace BookAndRent.Repository
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<RentDate> RentDates { get; set; }
+        public DbSet<ApartmentFacility> ApartmentFacilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,7 @@ namespace BookAndRent.Repository
             modelBuilder.Entity<Facility>().ToTable("Facility");
             modelBuilder.Entity<Contract>().ToTable("Contract");
             modelBuilder.Entity<RentDate>().ToTable("RentDate");
+            modelBuilder.Entity<ApartmentFacility>().ToTable("ApartmentFacility");
         }
 
         public void InitializeDemoData()
@@ -93,6 +95,9 @@ namespace BookAndRent.Repository
                         }
                     }
                 });
+
+            SaveChanges();
+
             Contracts.Add(new Contract
             {
                 ApartmentId = Apartments.ToList()[0].ApartmentId,
