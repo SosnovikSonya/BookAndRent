@@ -6,7 +6,6 @@ namespace BookAndRent.Views.ViewModels
 {
     public class UserRegistration
     {
-        public int Id { get; set; }
         [DisplayName("Имя")]
         [Required(ErrorMessage = "Пожалуйста, введите имя.")]
         public string FirstName { get; set; }
