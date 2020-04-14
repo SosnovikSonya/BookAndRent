@@ -13,6 +13,12 @@ namespace BookAndRent.Controllers
         public IActionResult Index()
         {
             return View();
-        }       
+        }
+
+        public IActionResult Help()
+        {
+            return View();
+        }
+
     }
 }
