@@ -8,7 +8,7 @@ namespace BookAndRent.Mapping
     {
         public ViewToModelMapper()
         {
-            CreateMap<Views.ViewModels.User, IUser>()
+            CreateMap<Views.ViewModels.UserRegistration, IUser>()
                 .ConstructUsing(dbEntity => DependencyContainer.Resolve<IUser>());
 
             //TODO: add more mapping for other entities
