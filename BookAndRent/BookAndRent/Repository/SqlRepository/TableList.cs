@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BookAndRent.Repository
+namespace BookAndRent.Repository.SqlRepository
 {
     public class TableList<T> : ITableList<T> where T: IIdenitifiable
     {
