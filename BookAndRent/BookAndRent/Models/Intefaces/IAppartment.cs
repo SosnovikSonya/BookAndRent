@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookAndRent.Models.Intefaces
 {
-    public interface IApartment
+    public interface IApartment : IIdenitifiable
     {
-        int ApartmentId { get; set; }
         string Address { get; set; }
         string Title { get; set; }
         string Description { get; set; }
@@ -21,5 +18,13 @@ namespace BookAndRent.Models.Intefaces
         List<IRentDate> AvailableDates { get; set; }
         List<IContract> Contracts { get; set; }
         IUser HouseHolder { get; set; }
+
+        bool IsDateAvailable(DateTime start, DateTime end);
+        
+        /// <summary>
+        /// Rent means receive something from somebody
+        /// </summary>
+        /// <returns></returns>
+        IContract Rent(IUser renter, DateTime start, DateTime end);
     }
 }

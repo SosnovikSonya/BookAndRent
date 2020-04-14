@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookAndRent.Models.Intefaces
 {
-    public interface IComment
+    public interface IComment : IIdenitifiable
     {
-        int CommentId { get; set; }
-        int ApartmentId { get; set; }
-        int UserId { get; set; }
+        IApartment Apartment { get; set; }
+        IUser Commentator { get; set; }
         string Content { get; set; }
         DateTime Date { get; set; }
     }

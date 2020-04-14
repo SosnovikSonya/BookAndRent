@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 
 namespace BookAndRent.Models.Intefaces
 {
-    public interface IFacility
+    public interface IFacility : IIdenitifiable
     {
-        int FacilityId { get; set; }
         string Title { get; set; }
     }
 }

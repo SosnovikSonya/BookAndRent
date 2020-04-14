@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 
 namespace BookAndRent.Models.Intefaces
 {
-    public interface IPicture
+    public interface IPicture : IIdenitifiable
     {
-        int PictureId { get; set; }
         byte[] PictureBytes { get; set; }
     }
 }

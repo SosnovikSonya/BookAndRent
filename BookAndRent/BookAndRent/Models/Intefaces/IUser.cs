@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 
 namespace BookAndRent.Models.Intefaces
 {
-    public interface IUser
+    public interface IUser : IIdenitifiable
     {
-        int UserId { get; set; }
         string FirstName { get; set; }
         string LastName { get; set; }
         string Email { get; set; }

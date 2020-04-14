@@ -1,17 +1,15 @@
 ﻿using BookAndRent.Models.Intefaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookAndRent.Models.Implementations
 {
     public class Comment : IComment
     {
-        public int CommentId { get; set; }
-        public int ApartmentId { get; set; }
-        public int UserId { get; set; }
+        public int Id { get; set; }
+        public IApartment Apartment { get; set; }
+        public IUser Commentator { get; set; }
         public string Content { get; set; }
         public DateTime Date { get; set; }
+
     }
 }

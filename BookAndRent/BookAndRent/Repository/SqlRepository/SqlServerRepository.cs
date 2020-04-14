@@ -37,12 +37,12 @@ namespace BookAndRent.Repository.SqlRepository
             Refresh();
         }
 
-        private void HandleItemAdded<T>(T item, Type dbType) where T: IUpdatable
+        private void HandleItemAdded<T>(T item, Type dbType) where T: IIdenitifiable
         {
             DbContext.Add(Mapper.Map(item, typeof(T), dbType));
         }
 
-        private void HandeItemUpdated<T>(T item, Type dbType) where T : IUpdatable
+        private void HandeItemUpdated<T>(T item, Type dbType) where T : IIdenitifiable
         {
             var obj = DbContext.Find(dbType, item.Id);
             DbContext.Remove(obj);

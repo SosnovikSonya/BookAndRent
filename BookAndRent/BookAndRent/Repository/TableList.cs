@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BookAndRent.Repository
 {
-    public class TableList<T> : ITableList<T> where T: IUpdatable
+    public class TableList<T> : ITableList<T> where T: IIdenitifiable
     {
         private ICollection<T> Collection { get; set; }
         private Type DbMappedType { get; set; }
