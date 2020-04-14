@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using BookAndRent.Mapping;
+using BookAndRent.Models.Intefaces;
 using BookAndRent.Repository;
+using BookAndRent.Repository.SqlRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +31,10 @@ namespace BookAndRent
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<BookAndRentDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DBConnectionString")));
+            services.AddTransient<IRepository, SqlServerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
