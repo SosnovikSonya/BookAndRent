@@ -30,7 +30,6 @@ namespace BookAndRent.Controllers
         }
 
         [HttpPost("registration")]
-        [ValidateAntiForgeryToken]
         public IActionResult Registration(Views.ViewModels.UserRegistration viewUser)
         {
             IUser user = Mapper.Map<IUser>(viewUser);
@@ -39,8 +38,7 @@ namespace BookAndRent.Controllers
 
             var newUser = Repository.Users.Last();
 
-            //return RedirectToAction("Index", "Home");
-            return View(viewUser);
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Authorization()
