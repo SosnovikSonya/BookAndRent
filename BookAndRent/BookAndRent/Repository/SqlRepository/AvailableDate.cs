@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
-    public class RentDate
+    public class AvailableDate
     {
-        public int RentDateId { get; set; }
+        public int AvailableDateId { get; set; }
         public int ApartmentId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

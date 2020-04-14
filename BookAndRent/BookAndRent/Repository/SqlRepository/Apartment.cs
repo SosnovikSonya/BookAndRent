@@ -21,7 +21,7 @@ namespace BookAndRent.Repository.SqlRepository
         public int RoomAmount { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Picture> Pictures { get; set; }
-        public List<RentDate> AvailableDates { get; set; }
+        public List<AvailableDate> AvailableDates { get; set; }
         public List<Contract> Contracts { get; set; }
         public int UserId { get; set; }
         public List<ApartmentFacility> ApartmentFacilities { get; set; }

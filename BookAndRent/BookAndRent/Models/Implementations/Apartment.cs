@@ -18,7 +18,7 @@ namespace BookAndRent.Models.Implementations
         public List<IComment> Comments { get; set; }
         public List<IFacility> Facilities { get; set; }
         public List<IPicture> Pictures { get; set; }
-        public List<IRentDate> AvailableDates { get; set; }
+        public List<IAvailableDate> AvailableDates { get; set; }
         public List<IContract> Contracts { get; set; }
         public IUser HouseHolder { get; set; }
 
@@ -27,7 +27,7 @@ namespace BookAndRent.Models.Implementations
             Comments = new List<IComment>();
             Facilities = new List<IFacility>();
             Pictures = new List<IPicture>();
-            AvailableDates = new List<IRentDate>();
+            AvailableDates = new List<IAvailableDate>();
             Contracts = new List<IContract>();
         }
 

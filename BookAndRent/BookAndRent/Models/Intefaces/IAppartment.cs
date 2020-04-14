@@ -15,7 +15,7 @@ namespace BookAndRent.Models.Intefaces
         List<IComment> Comments { get; set; }
         List<IFacility> Facilities { get; set; }
         List<IPicture> Pictures { get; set; }
-        List<IRentDate> AvailableDates { get; set; }
+        List<IAvailableDate> AvailableDates { get; set; }
         List<IContract> Contracts { get; set; }
         IUser HouseHolder { get; set; }
 

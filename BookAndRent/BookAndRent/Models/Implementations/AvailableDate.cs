@@ -3,7 +3,7 @@ using System;
 
 namespace BookAndRent.Models.Implementations
 {
-    public class RentDate : IRentDate
+    public class AvailableDate : IAvailableDate
     {
         public int Id { get; set; }
         public int ApartmentId { get; set; }

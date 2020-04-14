@@ -19,7 +19,7 @@ namespace BookAndRent.Repository.SqlRepository
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Picture> Pictures { get; set; }
-        public DbSet<RentDate> RentDates { get; set; }
+        public DbSet<AvailableDate> AvailableDates { get; set; }
         public DbSet<ApartmentFacility> ApartmentFacilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace BookAndRent.Repository.SqlRepository
             modelBuilder.Entity<Picture>().ToTable("Picture");
             modelBuilder.Entity<Facility>().ToTable("Facility");
             modelBuilder.Entity<Contract>().ToTable("Contract");
-            modelBuilder.Entity<RentDate>().ToTable("RentDate");
+            modelBuilder.Entity<AvailableDate>().ToTable("AvailableDate");
             modelBuilder.Entity<ApartmentFacility>().ToTable("ApartmentFacility");
         }
 
@@ -70,9 +70,9 @@ namespace BookAndRent.Repository.SqlRepository
                     Title = "Лучший бордель того города",
                     Coordinates = "zhopa",
                     UserId = Users.ToList().Single(user => user.FirstName == "Пупа").Id,
-                    AvailableDates = new List<RentDate>
+                    AvailableDates = new List<AvailableDate>
                     {
-                        new RentDate
+                        new AvailableDate
                         {
                             StartDate = DateTime.UtcNow,
                             EndDate = DateTime.UtcNow.AddDays(30)
