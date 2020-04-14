@@ -146,50 +146,5 @@ namespace BookAndRent.Test
             var isAvailable = apartment.IsDateAvailable(availableEndDate1, availableEndDate1.AddDays(6));
             Assert.IsFalse(isAvailable);
         }
-
-        [TestMethod]
-        public void MyTestMethod()
-        {
-
-            var asdsd = Activator.CreateInstance(typeof(MyClass));
-            var asdsd1 = Activator.CreateInstance(typeof(MyClass), "pr1", "pr2");
-
-
-        }
-    }
-
-
-
-    public class MyClass
-    {
-        public MyClass()
-        {
-
-        }
-
-        public MyClass(string prop1, string prop2)
-        {
-            Prop1 = prop1;
-            Prop2 = prop2;
-        }
-        public string Prop1 { get; set; }
-        public string Prop2 { get; set; }
-
-        public Dictionary<string, string> AllProps
-        {
-            get
-            {
-                var dictionary = new Dictionary<string, string>();
-                foreach (var propertyInfo in GetType().GetProperties())
-                {
-                    if (propertyInfo.PropertyType == typeof(string))
-                    {
-                        dictionary.Add(propertyInfo.Name, (string)propertyInfo.GetValue(this));
-                    }
-                }
-
-                return dictionary;
-            }
-        }
-    }
+    }    
 }
