@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookAndRent.Repository
+namespace BookAndRent.Repository.SqlRepository
 {
     public class Picture
     {

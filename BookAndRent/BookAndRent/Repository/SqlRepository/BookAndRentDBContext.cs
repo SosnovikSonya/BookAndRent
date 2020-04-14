@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookAndRent.Repository
+namespace BookAndRent.Repository.SqlRepository
 {
     public class BookAndRentDBContext : DbContext
     {
@@ -69,7 +69,7 @@ namespace BookAndRent.Repository
                     CostPerNight = 100,
                     Title = "Лучший бордель того города",
                     Coordinates = "zhopa",
-                    UserId = Users.ToList().Single(user => user.FirstName == "Пупа").UserId,
+                    UserId = Users.ToList().Single(user => user.FirstName == "Пупа").Id,
                     AvailableDates = new List<RentDate>
                     {
                         new RentDate
@@ -90,7 +90,7 @@ namespace BookAndRent.Repository
                         new Comment
                         {
                             Content = "hueta",
-                            UserId = Users.ToList()[1].UserId,
+                            UserId = Users.ToList()[1].Id,
                             Date = DateTime.UtcNow                             
                         }
                     }
@@ -100,7 +100,7 @@ namespace BookAndRent.Repository
 
             Contracts.Add(new Contract
             {
-                ApartmentId = Apartments.ToList()[0].ApartmentId,
+                ApartmentId = Apartments.ToList()[0].Id,
                 CheckIn = DateTime.UtcNow.AddDays(1),
                 CheckOut = DateTime.UtcNow.AddDays(4),
                 ContractDate = DateTime.UtcNow,

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookAndRent.Repository
+namespace BookAndRent.Repository.SqlRepository
 {
     public class Contract
     {
