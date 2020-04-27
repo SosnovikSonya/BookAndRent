@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
-    public class Contract
+    public class Contract : ITable
     {
-        public int ContractId { get; set; }
+        [Column("ContractId")]
+        [Key()]
+        public int Id { get; set; }
         public User Renter { get; set; }
         public User Holder { get; set; }
         public int ApartmentId { get; set; }

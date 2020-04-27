@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
-    public class Apartment
+    public class Apartment: ITable
     {
         [Column("ApartmentId")]
         [Key()]
@@ -24,7 +24,8 @@ namespace BookAndRent.Repository.SqlRepository
         public List<AvailableDate> AvailableDates { get; set; }
         public List<Contract> Contracts { get; set; }
         public int UserId { get; set; }
-        public List<ApartmentFacility> ApartmentFacilities { get; set; }
+        // public List<ApartmentFacility> ApartmentFacilities { get; set; }
+        public Facility? Facilities { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
