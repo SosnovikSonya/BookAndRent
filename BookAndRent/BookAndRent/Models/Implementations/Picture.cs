@@ -6,6 +6,6 @@ namespace BookAndRent.Models.Implementations
     {
         public int Id { get; set; }
         public byte[] PictureBytes { get; set; }
-        
+        public int ApartmentId { get; set; }
     }
 }
