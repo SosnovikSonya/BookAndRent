@@ -6,6 +6,7 @@ namespace BookAndRent.Views.ViewModels
 {
     public class UserRegistration
     {
+
         [DisplayName("Имя")]
         [Required(ErrorMessage = "Пожалуйста, введите имя.")]
         public string FirstName { get; set; }
@@ -16,6 +17,7 @@ namespace BookAndRent.Views.ViewModels
         [Required(ErrorMessage = "Пожалуйста, введите логин.")]
         public string Email { get; set; }
         [DisplayName("Пароль")]
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Пожалуйста, введите пароль.")]
         public string Password { get; set; }
     }

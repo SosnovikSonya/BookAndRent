@@ -16,7 +16,6 @@ namespace BookAndRent.DependencyResolving
             {
                 config.For<IUser>().Use<User>();
                 config.For<IApartment>().Use<Apartment>();
-                config.For<IFacility>().Use<Facility>();
                 config.For<IComment>().Use<Comment>();
                 config.For<IContract>().Use<Contract>();
                 config.For<IPicture>().Use<Picture>();
