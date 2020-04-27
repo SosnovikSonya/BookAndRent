@@ -1,0 +1,30 @@
+﻿@model BookAndRent.Views.ViewModels.ApartmentInfo
+
+@{
+    ViewData["Title"] = "Принимайте гостей";
+}
+
+<h2>Шаг 3 - Фотографии</h2>
+
+<hr />
+
+<div class="row">
+    <form asp-action="AddPictures" method="post" enctype="multipart/form-data">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input name="PictureFile" type="file" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input asp-for="ApartmentId" class="form-control" name="ApartmentId" type="hidden" value="@Model.ApartmentId" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Далее" class="btn btn-default" />
+            </div>
+        </div>
+
+    </form>
+</div>
+
