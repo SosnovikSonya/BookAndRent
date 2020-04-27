@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BookAndRent.DependencyResolving;
 using BookAndRent.Mapping;
 using BookAndRent.Models.Intefaces;
 using BookAndRent.Repository;
 using BookAndRent.Repository.SqlRepository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +37,12 @@ namespace BookAndRent
             services.AddDbContext<BookAndRentDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DBConnectionString")));
             services.AddTransient<IRepository, SqlServerRepository>();
+            DependencyContainer.RegisterDependencies();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+              .AddCookie(options => //CookieAuthenticationOptions
+              {
+                  options.LoginPath = new PathString("/user/Authorization");
+              });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +61,8 @@ namespace BookAndRent
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseAuthentication();    // аутентификация
 
             app.UseMvc(routes =>
             {
