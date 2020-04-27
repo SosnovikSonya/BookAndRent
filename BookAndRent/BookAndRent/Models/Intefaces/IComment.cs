@@ -4,8 +4,8 @@ namespace BookAndRent.Models.Intefaces
 {
     public interface IComment : IIdenitifiable
     {
-        IApartment Apartment { get; set; }
-        IUser Commentator { get; set; }
+        int ApartmentId { get; set; }
+        int CommentatorId { get; set; }
         string Content { get; set; }
         DateTime Date { get; set; }
     }
