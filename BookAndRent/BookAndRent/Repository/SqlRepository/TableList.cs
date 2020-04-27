@@ -6,51 +6,47 @@ using System.Linq;
 
 namespace BookAndRent.Repository.SqlRepository
 {
-    public class TableList<T> : ITableList<T> where T: IIdenitifiable
+    public class TableList<T, TDb> : ITableList<T> where T: IIdenitifiable
     {
-        private ICollection<T> Collection { get; set; }
-        private Type DbMappedType { get; set; }
+        private IList<T> List { get; set; }
 
-        public event Action<T, Type> ElementAdded;
-        public event Action<T, Type> ElementUpdated;
+        public event Action<T> ElementAdded;
+        public event Action<T> ElementUpdated;
+        public event Action<T> ElementDeleted;
 
-        public TableList(ICollection<T> collection, Type dbMappedType)
+        public TableList(IList<T> list)
         {
-            Collection = collection;
-            DbMappedType = dbMappedType;
+            List = list;
         }
 
-        public int Count => Collection.Count;
-
-        public bool IsReadOnly => Collection.IsReadOnly;
-
-        public void Add(T item)
+        public T FindById(int id)
         {
-            Collection.Add(item);
-            ElementAdded.Invoke(item, DbMappedType);
+            return List.SingleOrDefault(a => a.Id == id);
         }
 
-        public void Replace(int index, T item)
+        public void Add(T element)
         {
-            var oldItem = Collection.ElementAt(index);
-            Collection.Remove(oldItem);
-            Collection.Add(item);
-            ElementUpdated.Invoke(item, DbMappedType);
+            List.Add(element);
+            ElementAdded.Invoke(element);
         }
 
-        public void Clear() => Collection.Clear();
-
-        public bool Contains(T item) => Collection.Contains(item);
-
-        public void CopyTo(T[] array, int arrayIndex) => Collection.CopyTo(array, arrayIndex);
-
-        public IEnumerator<T> GetEnumerator() => Collection.GetEnumerator();
-
-        public bool Remove(T item)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var element = List.Single(a => a.Id == id);
+            List.Remove(element);
+            ElementDeleted.Invoke(element);
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => Collection.GetEnumerator();
+        public void Modify(T element)
+        {
+            List.Remove(List.Single(a => a.Id == element.Id));
+            List.Add(element);
+            ElementUpdated.Invoke(element);
+        }
+
+        IEnumerable<T> ITableList<T>.Search(Func<T, bool> searchPredicate)
+        {
+            return List.Where(searchPredicate);
+        }
     }
 }
