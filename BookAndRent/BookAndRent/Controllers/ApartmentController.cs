@@ -10,6 +10,7 @@ using BookAndRent.Views.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using BookAndRent.Repository.SqlRepository;
 
 namespace BookAndRent.Controllers
 {

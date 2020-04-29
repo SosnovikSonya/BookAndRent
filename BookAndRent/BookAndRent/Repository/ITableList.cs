@@ -9,7 +9,7 @@ namespace BookAndRent.Repository
         event Action<T> ElementAdded;
         event Action<T> ElementUpdated;
         event Action<T> ElementDeleted;
-        //void Replace(int index, T item);
+
         T FindById(int id);
         void Add(T element);
         void Delete(int id);

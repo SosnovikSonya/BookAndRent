@@ -1,18 +1,18 @@
 ﻿using BookAndRent.Models.Intefaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BookAndRent.Repository.SqlRepository
 {
-    public class TableList<T, TDb> : ITableList<T> where T: IIdenitifiable
+    public class TableList<T, TDb> : ITableList<T> where T: IIdenitifiable where TDb : ITable
     {
         private IList<T> List { get; set; }
 
         public event Action<T> ElementAdded;
         public event Action<T> ElementUpdated;
         public event Action<T> ElementDeleted;
+        
 
         public TableList(IList<T> list)
         {
@@ -21,7 +21,7 @@ namespace BookAndRent.Repository.SqlRepository
 
         public T FindById(int id)
         {
-            return List.SingleOrDefault(a => a.Id == id);
+            return List.SingleOrDefault(item => item.Id == id);
         }
 
         public void Add(T element)

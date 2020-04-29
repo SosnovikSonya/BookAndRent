@@ -23,8 +23,7 @@ namespace BookAndRent.Repository.SqlRepository
         public List<Picture> Pictures { get; set; }
         public List<AvailableDate> AvailableDates { get; set; }
         public List<Contract> Contracts { get; set; }
-        public int UserId { get; set; }
-        // public List<ApartmentFacility> ApartmentFacilities { get; set; }
+        public User User { get; set; }
         public Facility? Facilities { get; set; }
         public bool IsDeleted { get; set; }
     }

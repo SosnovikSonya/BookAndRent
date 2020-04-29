@@ -15,11 +15,9 @@ namespace BookAndRent.Repository.SqlRepository
         public DbSet<Apartment> Apartments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        //public DbSet<Facility> Facilities { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<AvailableDate> AvailableDates { get; set; }
-        //public DbSet<ApartmentFacility> ApartmentFacilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,25 +25,34 @@ namespace BookAndRent.Repository.SqlRepository
             modelBuilder.Entity<Comment>().ToTable("Comment");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Picture>().ToTable("Picture");
-            //modelBuilder.Entity<Facility>().ToTable("Facility");
             modelBuilder.Entity<Contract>().ToTable("Contract");
             modelBuilder.Entity<AvailableDate>().ToTable("AvailableDate");
-           // modelBuilder.Entity<ApartmentFacility>().ToTable("ApartmentFacility");
+        }
+
+        public void AddOrUpdate(ITable source)
+        {
+            var tableType = source.GetType();
+
+            var target = Find(tableType, source.Id);
+
+            if (target == null)
+            {
+                target = source;
+                Attach(target);
+            }
+
+            foreach (var prop in tableType.GetProperties())
+            {
+                var propValue = prop.GetValue(source);
+                if (prop.PropertyType.IsValueType)
+                {
+                    prop.SetValue(target, prop.GetValue(source));
+                }               
+            }
         }
 
         public void InitializeDemoData()
-        {
-            //Facilities.AddRange(
-            //    new Facility
-            //    {
-            //        Title = "Интернет"
-            //    },
-            //    new Facility
-            //    {
-            //        Title = "Фен"
-            //    }
-            //);
-            
+        {            
             Users.AddRange(
                 new User
                 {
@@ -68,7 +75,7 @@ namespace BookAndRent.Repository.SqlRepository
                     CostPerNight = 100,
                     Title = "Лучший бордель того города",
                     Coordinates = "zhopa",
-                    UserId = Users.ToList().Single(user => user.FirstName == "Пупа").Id,
+                    User = Users.ToList().Single(user => user.FirstName == "Пупа"),
                     AvailableDates = new List<AvailableDate>
                     {
                         new AvailableDate
@@ -89,7 +96,7 @@ namespace BookAndRent.Repository.SqlRepository
                         new Comment
                         {
                             Content = "hueta",
-                            UserId = Users.ToList()[1].Id,
+                            User = Users.ToList()[1],
                             Date = DateTime.UtcNow                             
                         }
                     }
@@ -99,7 +106,7 @@ namespace BookAndRent.Repository.SqlRepository
 
             Contracts.Add(new Contract
             {
-                ApartmentId = Apartments.ToList()[0].Id,
+                Apartment = Apartments.ToList()[0],
                 CheckIn = DateTime.UtcNow.AddDays(1),
                 CheckOut = DateTime.UtcNow.AddDays(4),
                 ContractDate = DateTime.UtcNow,

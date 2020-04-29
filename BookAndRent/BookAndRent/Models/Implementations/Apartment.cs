@@ -59,12 +59,12 @@ namespace BookAndRent.Models.Implementations
         {
             var contract = new Contract
             {
-                Renter = renter,
+                RenterId = renter.Id,
                 CheckIn = start,
                 CheckOut = end,
-                Holder = HouseHolder,
+                HolderId = HouseHolder.Id,
                 ContractDate = DateTime.UtcNow,
-                Apartment = this
+                ApartmentId = Id
             };
 
             Contracts.Add(contract);

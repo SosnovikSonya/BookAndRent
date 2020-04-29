@@ -13,6 +13,8 @@ namespace BookAndRent.Repository.SqlRepository
         [Column("AvailableDateId")]
         [Key()]
         public int Id { get; set; }
+        public Apartment Apartment { get; set; }
+        [ForeignKey("Apartment")]
         public int ApartmentId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

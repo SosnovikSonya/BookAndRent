@@ -2,11 +2,6 @@
 
 namespace BookAndRent.Models.Intefaces
 {
-    //public interface IFacility : IIdenitifiable
-    //{
-    //    string Title { get; set; }
-    //}
-
     public enum Facility
     {
         None = 0,

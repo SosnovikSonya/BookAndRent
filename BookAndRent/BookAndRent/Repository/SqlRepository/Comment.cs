@@ -1,10 +1,6 @@
-﻿using BookAndRent.Models.Intefaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
@@ -13,8 +9,12 @@ namespace BookAndRent.Repository.SqlRepository
         [Column("CommentId")]
         [Key()]
         public int Id { get; set; }
-        public int? ApartmentId { get; set; }
-        public int? UserId { get; set; }
+        public Apartment Apartment { get; set; }
+        [ForeignKey("Apartment")]
+        public int ApartmentId { get; set; }
+        public User User { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
         public string Content { get; set; }
         public DateTime Date { get; set; }
         public bool IsDeleted { get; set; }

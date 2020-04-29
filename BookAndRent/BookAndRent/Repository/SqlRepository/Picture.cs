@@ -13,7 +13,9 @@ namespace BookAndRent.Repository.SqlRepository
         [Column("PictureId")]
         [Key()]
         public int Id { get; set; }
+        [ForeignKey("Apartment")]
         public int ApartmentId { get; set; }
+        public Apartment Apartment { get; set; }
         public byte[] PictureBytes { get; set; }
         public bool IsDeleted { get; set; }
     }
