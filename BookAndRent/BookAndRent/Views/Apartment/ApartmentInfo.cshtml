@@ -1,0 +1,125 @@
+﻿@model BookAndRent.Views.ViewModels.AvailableApartmentInfo
+
+@{
+    ViewData["Title"] = "ApartmentInfo";
+}
+
+<style>
+
+    #a {
+        border-width: 1px;
+        border-color: rgb(190,190,190);
+        border-style: solid;
+        padding: 20px 20px 20px 20px;
+        box-shadow: 0.4em 0.4em 5px rgba(122,122,122,0.5);
+    }
+</style>
+<br />
+<br />
+
+<div class="row" id="a">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            @Html.DisplayFor(model => model.Address)
+        </div>
+    </div>
+</div>
+
+<div class="row" id="a">
+    <div class="form-group">
+        <div class="col-md-12">
+            фото
+        </div>
+    </div>
+</div>
+
+<div class="row" id="a">
+    <div class="col-md-6" >
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            @Html.DisplayFor(model => model.Title)
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            @Html.DisplayFor(model => model.Description)
+        </div>
+
+        <div class="form-group">
+            <h4>Спальные места</h4>
+            <label asp-for="RoomAmount" class="control-label"></label>
+            @Html.DisplayFor(model => model.RoomAmount)
+
+            <label asp-for="SleepingPlaces" class="control-label"></label>
+            @Html.DisplayFor(model => model.SleepingPlaces)
+        </div>
+
+        <div class="form-group">
+            <h4>Удобства</h4>
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="form-group">
+            <label asp-for="CostPerNight" class="control-label"></label>
+            @Html.DisplayFor(model => model.CostPerNight)
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Забронировать" class="btn btn-default" />
+        </div>
+
+    </div>
+</div>
+
+
+
+@*<div>
+        <h4>AvailableApartmentInfo</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CostPerNight)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CostPerNight)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.SleepingPlaces)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SleepingPlaces)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.RoomAmount)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RoomAmount)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        <a asp-action="Index">Back to List</a>
+    </div>*@

@@ -1,9 +1,8 @@
-﻿using BookAndRent.Models.Intefaces;
-using System;
+﻿using System;
 
-namespace BookAndRent.Models.Implementations
+namespace BookAndRent.Views.ViewModels
 {
-    public class Comment : IComment
+    public class Comment
     {
         public int Id { get; set; }
         public int ApartmentId { get; set; }

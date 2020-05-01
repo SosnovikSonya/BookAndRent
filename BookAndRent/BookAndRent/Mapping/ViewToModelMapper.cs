@@ -18,12 +18,6 @@ namespace BookAndRent.Mapping
 
             CreateMap<IApartment, Views.ViewModels.CreateApartment>();
 
-
-            //CreateMap<IFacility, Views.ViewModels.Facility>();
-
-            //CreateMap<Views.ViewModels.Facility, IFacility>()
-            //    .ConstructUsing(viewEntity => DependencyContainer.Resolve<IFacility>());
-
             CreateMap<IPicture, Views.ViewModels.ApartmentPicture>();
 
             CreateMap<Views.ViewModels.ApartmentPicture, IPicture>()
@@ -33,6 +27,15 @@ namespace BookAndRent.Mapping
 
             CreateMap<Views.ViewModels.AvailableDates, IAvailableDate>()
                 .ConstructUsing(viewEntity => DependencyContainer.Resolve<IAvailableDate>());
+
+            CreateMap<IComment, Views.ViewModels.Comment>();
+            CreateMap<Views.ViewModels.Comment, IComment>()
+                .ConstructUsing(viewEntity => DependencyContainer.Resolve<IComment>());
+
+            CreateMap<IApartment, Views.ViewModels.AvailableApartmentInfo>()
+                .ForMember(apartment => apartment.Facilities, mapper => mapper.MapFrom(src => src.Facilities))
+                .ForMember(apartment => apartment.Comments, mapper => mapper.MapFrom(src => src.Comments))
+                .ForMember(apartment => apartment.Pictures, mapper => mapper.MapFrom(src => src.Pictures));
 
             //TODO: add more mapping for other entities
 

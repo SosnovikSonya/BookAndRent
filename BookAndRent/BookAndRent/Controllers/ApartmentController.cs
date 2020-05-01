@@ -10,7 +10,6 @@ using BookAndRent.Views.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Http;
-using BookAndRent.Repository.SqlRepository;
 
 namespace BookAndRent.Controllers
 {
@@ -27,7 +26,6 @@ namespace BookAndRent.Controllers
             Mapper = mapper;
             Repository = repository;
         }
-
         
         [HttpGet]
         public IActionResult GetApartmentCreationView()
@@ -107,7 +105,7 @@ namespace BookAndRent.Controllers
             {
                 var formPicture = formCollection.Files.Single();
                 byte[] imageData = null;
-                // считываем переданный файл в массив байтов
+                
                 using (var binaryReader = new BinaryReader(formPicture.OpenReadStream()))
                 {
                     imageData = binaryReader.ReadBytes((int)formPicture.Length);
@@ -146,12 +144,34 @@ namespace BookAndRent.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-        [HttpPost("availableApartments")]
-        public IActionResult SearchAvailableApartment()
+        [AllowAnonymous]
+        [HttpPost("AvailableApartments")]
+        public IActionResult SearchAvailableApartment(SearchModel searchModel)
         {
-            
-            return View();
+            Repository.Save();
+            var availableApartments = Repository.Apartments
+                .Search(
+                    ap => ap.SleepingPlaces >= searchModel.SleepingPlaces
+                    && ap.Address.Contains(searchModel.Address)
+                    && ap.IsDateAvailable(searchModel.CheckIn, searchModel.CheckOut)
+                    )
+                .Select(apartment => new AvailableApartmentInfo
+                {
+                    ApartmentId = apartment.Id,
+                    Address = apartment.Address,
+                    Title = apartment.Title,
+                    CostPerNight = apartment.CostPerNight,
+                });            
+
+            return View("AvailableApartments", availableApartments);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("ApartmentInfo")]
+        public IActionResult ApartmentInfo(int id)
+        {
+            var apartment = Repository.Apartments.FindById(id);
+            return View("ApartmentInfo", Mapper.Map<AvailableApartmentInfo>(apartment));
         }
     }
 }
