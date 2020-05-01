@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using BookAndRent.Models.Intefaces;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BookAndRent.Repository.SqlRepository
 {
@@ -79,9 +80,26 @@ namespace BookAndRent.Repository.SqlRepository
             DbContext.AddOrUpdate(obj);
         }
 
-        private List<TTarget> CheckDeletedAndMap<TTarget, TDb>(DbSet<TDb> collection) where TDb : class, ITable
+        private List<TTarget> CheckDeletedAndMap<TTarget, TDb>(DbSet<TDb> dbCollection) where TDb : class, ITable
         {
-            return collection.Where(item => !item.IsDeleted).Select(dbUser => Mapper.Map<TTarget>(dbUser)).ToList();
+            var resultCollection = new List<TTarget>();
+            foreach (var dbItem in dbCollection)
+            {
+                if (dbItem.IsDeleted)
+                {
+                    continue;
+                }
+                var dbItemReserialized = JsonConvert.DeserializeObject<TDb>(
+                        JsonConvert.SerializeObject(dbItem, 
+                            Formatting.Indented,
+                            new JsonSerializerSettings
+                            {
+                                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                            }));
+                var itarget = Mapper.Map<TTarget>(dbItemReserialized);
+                resultCollection.Add(itarget);
+            }
+            return resultCollection;
         }
     }
 }

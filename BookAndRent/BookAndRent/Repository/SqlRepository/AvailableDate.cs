@@ -1,10 +1,6 @@
-﻿using BookAndRent.Models.Intefaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
@@ -13,7 +9,7 @@ namespace BookAndRent.Repository.SqlRepository
         [Column("AvailableDateId")]
         [Key()]
         public int Id { get; set; }
-        public Apartment Apartment { get; set; }
+        public virtual Apartment Apartment { get; set; }
         [ForeignKey("Apartment")]
         public int ApartmentId { get; set; }
         public DateTime StartDate { get; set; }

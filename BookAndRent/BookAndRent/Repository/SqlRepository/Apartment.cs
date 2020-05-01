@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
@@ -19,11 +16,11 @@ namespace BookAndRent.Repository.SqlRepository
         public decimal CostPerNight { get; set; }
         public int SleepingPlaces { get; set; }
         public int RoomAmount { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<Picture> Pictures { get; set; }
-        public List<AvailableDate> AvailableDates { get; set; }
-        public List<Contract> Contracts { get; set; }
-        public User User { get; set; }
+        public virtual List<Comment> Comments { get; set; }
+        public virtual List<Picture> Pictures { get; set; }
+        public virtual List<AvailableDate> AvailableDates { get; set; }
+        public virtual List<Contract> Contracts { get; set; }
+        public virtual User User { get; set; }
         public Facility? Facilities { get; set; }
         public bool IsDeleted { get; set; }
     }
