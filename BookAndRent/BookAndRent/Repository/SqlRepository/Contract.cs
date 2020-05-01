@@ -11,13 +11,13 @@ namespace BookAndRent.Repository.SqlRepository
         public int Id { get; set; }
         [ForeignKey("Renter")]
         public int? RenterId { get; set; }
-        public User Renter { get; set; }
+        public virtual User Renter { get; set; }
         [ForeignKey("Holder")]
         public int? HolderId { get; set; }
-        public User Holder { get; set; }
+        public virtual User Holder { get; set; }
         [ForeignKey("Apartment")]
         public int ApartmentId { get; set; }
-        public Apartment Apartment { get; set; }
+        public virtual Apartment Apartment { get; set; }
         public DateTime ContractDate { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }

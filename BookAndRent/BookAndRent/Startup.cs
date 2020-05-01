@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using BookAndRent.DependencyResolving;
-using BookAndRent.Mapping;
-using BookAndRent.Models.Intefaces;
 using BookAndRent.Repository;
 using BookAndRent.Repository.SqlRepository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,7 +32,11 @@ namespace BookAndRent
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<BookAndRentDBContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DBConnectionString")));
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DBConnectionString"));
+                options.ConfigureWarnings(a => a.Ignore(CoreEventId.DetachedLazyLoadingWarning));
+                options.UseLazyLoadingProxies();
+            });
             services.AddTransient<IRepository, SqlServerRepository>();
             DependencyContainer.RegisterDependencies();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

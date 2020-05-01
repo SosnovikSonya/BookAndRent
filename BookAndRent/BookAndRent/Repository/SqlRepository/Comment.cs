@@ -9,10 +9,10 @@ namespace BookAndRent.Repository.SqlRepository
         [Column("CommentId")]
         [Key()]
         public int Id { get; set; }
-        public Apartment Apartment { get; set; }
+        public virtual Apartment Apartment { get; set; }
         [ForeignKey("Apartment")]
         public int ApartmentId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         [ForeignKey("User")]
         public int UserId { get; set; }
         public string Content { get; set; }

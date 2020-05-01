@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using BookAndRent.Models.Intefaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +8,6 @@ using BookAndRent.Views.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Http;
-using BookAndRent.Repository.SqlRepository;
 
 namespace BookAndRent.Controllers
 {
