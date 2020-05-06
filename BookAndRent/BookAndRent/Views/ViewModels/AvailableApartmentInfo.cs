@@ -25,5 +25,7 @@ namespace BookAndRent.Views.ViewModels
         public List<Facility> Facilities { get; set; }
         [DisplayName("Отзывы")]
         public List<Comment> Comments { get; set; }
+        public string Coordinates { get; set; }
+
     }
 }
