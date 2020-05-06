@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace BookAndRent.Repository.SqlRepository
 {
-    //public class Facility
-    //{
-    //    public int FacilityId { get; set; }
-    //    public string Title { get; set; }
-    //    public List<ApartmentFacility> ApartmentFacilities { get; set; }
-    //    public bool IsDeleted { get; set; }
-    //}
-
     public enum Facility
     {
         WiFi = 1,
-        Kitchen = 2,
-        Metro = 4
+        Лифт = 2,
+        Фен = 4,
+        Утюг = 8,
+        Отопление = 16,
+        Кухня = 32,
+        Парковка = 64,
+        Телевизор = 128,
+        Кондиционер = 256,
+        Кабельное = 512
     }
 }

@@ -13,7 +13,6 @@ namespace BookAndRent.Models.Intefaces
         int SleepingPlaces { get; set; }
         int RoomAmount { get; set; }
         List<IComment> Comments { get; set; }
-        //List<IFacility> Facilities { get; set; }
         Facility? Facilities { get; set; }
         List<IPicture> Pictures { get; set; }
         List<IAvailableDate> AvailableDates { get; set; }
