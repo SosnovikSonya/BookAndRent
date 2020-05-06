@@ -101,18 +101,21 @@ namespace BookAndRent.Controllers
 
             if (formCollection.Files.Count != 0)
             {
-                var formPicture = formCollection.Files.Single();
+                //var formPicture = formCollection.Files.Single();
                 byte[] imageData = null;
-                
-                using (var binaryReader = new BinaryReader(formPicture.OpenReadStream()))
-                {
-                    imageData = binaryReader.ReadBytes((int)formPicture.Length);
-                }
-                apartmentPicture.PictureBytes = imageData;
 
-                IPicture picture = Mapper.Map<IPicture>(apartmentPicture);
-                Repository.Pictures.Add(picture);
-                Repository.Save();
+                foreach (var formPicture in formCollection.Files)
+                {
+                    using (var binaryReader = new BinaryReader(formPicture.OpenReadStream()))
+                    {
+                        imageData = binaryReader.ReadBytes((int)formPicture.Length);
+                    }
+                    apartmentPicture.PictureBytes = imageData;
+
+                    IPicture picture = Mapper.Map<IPicture>(apartmentPicture);
+                    Repository.Pictures.Add(picture);
+                    Repository.Save();
+                }                
             }
 
             return View("AddAvailableDates", new ApartmentInfo { ApartmentId = int.Parse(formCollection["ApartmentId"].Single()) });
@@ -146,21 +149,23 @@ namespace BookAndRent.Controllers
         [HttpPost("AvailableApartments")]
         public IActionResult SearchAvailableApartment(SearchModel searchModel)
         {
-            Repository.Save();
-            var availableApartments = Repository.Apartments
-                .Search(
-                    ap => ap.SleepingPlaces >= searchModel.SleepingPlaces
-                    && ap.Address.Contains(searchModel.Address)
-                    && ap.IsDateAvailable(searchModel.CheckIn, searchModel.CheckOut)
-                    )
-                .Select(apartment => new AvailableApartmentInfo
-                {
-                    ApartmentId = apartment.Id,
-                    Address = apartment.Address,
-                    Title = apartment.Title,
-                    CostPerNight = apartment.CostPerNight,
-                });            
 
+            var availableApartments = Repository.Apartments
+               .Search(
+                   ap => ap.SleepingPlaces >= searchModel.SleepingPlaces
+                   && ap.Address.Contains(searchModel.Address)
+                   && ap.IsDateAvailable(searchModel.CheckIn, searchModel.CheckOut)
+                   )
+               .Select(apartment => new AvailableApartmentInfo
+               {
+                   ApartmentId = apartment.Id,
+                   Address = apartment.Address,
+                   Title = apartment.Title,
+                   CostPerNight = apartment.CostPerNight,
+                   Coordinates = apartment.Coordinates,
+                   Pictures = apartment.Pictures.Select(pict => Mapper.Map<ApartmentPicture>(pict)).ToList()
+                });
+          
             return View("AvailableApartments", availableApartments);
         }
 
@@ -168,7 +173,7 @@ namespace BookAndRent.Controllers
         [HttpGet("ApartmentInfo")]
         public IActionResult ApartmentInfo(int id)
         {
-            var apartment = Repository.Apartments.FindById(id);
+            var apartment = Repository.Apartments.FindById(id);            
             return View("ApartmentInfo", Mapper.Map<AvailableApartmentInfo>(apartment));
         }
     }
