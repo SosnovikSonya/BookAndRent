@@ -17,10 +17,8 @@
                     @foreach (var item in this.Model.Facilities)
                     {
                         <li>
-                            <input id="@item.Title" type="checkbox" value="@item.Title" name="facility" />
-                            @*<input type="hidden" value="@item.Title" name="facility" />*@
-                            @*<input asp-for="@item.Title" class="form-check-input" />
-                        <label asp-for="@item.Title">@item.Title</label>*@
+                            <input id="@item.Title" type="checkbox" value="@item.Title" name="facility" />                          
+                            <label asp-for="@item.Title">@item.Title</label>
                         </li>
                     }
                 </ul>

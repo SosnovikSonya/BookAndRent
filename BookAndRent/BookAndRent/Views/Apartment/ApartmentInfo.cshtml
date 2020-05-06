@@ -4,65 +4,59 @@
     ViewData["Title"] = "ApartmentInfo";
 }
 
-<style>
 
-    #a {
-        border-width: 1px;
-        border-color: rgb(190,190,190);
-        border-style: solid;
-        padding: 20px 20px 20px 20px;
-        box-shadow: 0.4em 0.4em 5px rgba(122,122,122,0.5);
-    }
-</style>
-<br />
 <br />
 
-<div class="row" id="a">
-    <div class="col-md-12">
-        <div class="form-group">
-            <label asp-for="Address" class="control-label"></label>
-            @Html.DisplayFor(model => model.Address)
-        </div>
-    </div>
-</div>
-
-<div class="row" id="a">
-    <div class="form-group">
+<div>
+    <div class="row">
         <div class="col-md-12">
-            фото
+            <div class="form-group">
+                <h2>@Model.Address</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-12">
+                @foreach (var picture in Model.Pictures)
+                {
+                    <img style='width:200px; height:200px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(picture.PictureBytes))" />
+                }
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row" id="a">
-    <div class="col-md-6" >
+
+<div class="row">
+    <div class="col-md-8" >
         <div class="form-group">
-            <label asp-for="Title" class="control-label"></label>
-            @Html.DisplayFor(model => model.Title)
+            <h3>@Model.Title</h3>
+            <h5>@Model.SleepingPlaces  гостя @Model.RoomAmount комнаты</h5>
         </div>
 
         <div class="form-group">
-            <label asp-for="Description" class="control-label"></label>
-            @Html.DisplayFor(model => model.Description)
+            <h5>@Model.Description</h5>
         </div>
 
-        <div class="form-group">
-            <h4>Спальные места</h4>
-            <label asp-for="RoomAmount" class="control-label"></label>
-            @Html.DisplayFor(model => model.RoomAmount)
-
-            <label asp-for="SleepingPlaces" class="control-label"></label>
-            @Html.DisplayFor(model => model.SleepingPlaces)
-        </div>
-
+      
         <div class="form-group">
             <h4>Удобства</h4>
+            @foreach (var item in Model.Facilities)
+            {
+                <ul>
+                    <li>
+                        @item.Title
+                    </li>
+                </ul>
+            }
         </div>
 
     </div>
-
-    <div class="col-md-6">
-
+    <div class="col-md-1"></div>
+    <div class="col-md-3">
+        <p></p>
         <div class="form-group">
             <label asp-for="CostPerNight" class="control-label"></label>
             @Html.DisplayFor(model => model.CostPerNight)
@@ -74,52 +68,3 @@
 
     </div>
 </div>
-
-
-
-@*<div>
-        <h4>AvailableApartmentInfo</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Address)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Address)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CostPerNight)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.CostPerNight)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.SleepingPlaces)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.SleepingPlaces)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.RoomAmount)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.RoomAmount)
-            </dd>
-        </dl>
-    </div>
-    <div>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        <a asp-action="Index">Back to List</a>
-    </div>*@
