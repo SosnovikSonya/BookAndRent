@@ -1,15 +1,12 @@
-﻿using BookAndRent.Models.Intefaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BookAndRent.Views.ViewModels
+namespace BookAndRent.Views.ViewModels.ApartmentModels
 {
-    public class CreateApartment
+    public class AvailableApartmentInfo
     {
+        public int ApartmentId { get; set; }
+
         [DisplayName("Адрес")]
         public string Address { get; set; }
         [DisplayName("Описание")]
@@ -22,6 +19,13 @@ namespace BookAndRent.Views.ViewModels
         public int SleepingPlaces { get; set; }
         [DisplayName("Количество комнат")]
         public int RoomAmount { get; set; }
+        [DisplayName("Фотографии")]
+        public List<ApartmentPicture> Pictures { get; set; }
+        [DisplayName("Дополнительные удобства")]
+        public List<Facility> Facilities { get; set; }
+        [DisplayName("Отзывы")]
+        public List<Comment> Comments { get; set; }
         public string Coordinates { get; set; }
+
     }
 }

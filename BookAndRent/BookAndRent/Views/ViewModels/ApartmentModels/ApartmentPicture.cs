@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookAndRent.Views.ViewModels
+namespace BookAndRent.Views.ViewModels.ApartmentModels
 {
-    public class ApartmentFacilities
+    public class ApartmentPicture
     {
         public int ApartmentId { get; set; }
-        public IEnumerable<Facility> Facilities { get; set; }
+        public byte[] PictureBytes { get; set; }
     }
 }

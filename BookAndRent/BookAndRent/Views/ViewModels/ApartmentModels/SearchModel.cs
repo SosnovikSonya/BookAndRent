@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookAndRent.Views.ViewModels
+namespace BookAndRent.Views.ViewModels.ApartmentModels
 {
     public class SearchModel
     {

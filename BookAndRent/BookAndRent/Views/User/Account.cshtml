@@ -1,42 +1,49 @@
-﻿@model BookAndRent.Views.ViewModels.UserRegistration
+﻿@model BookAndRent.Views.ViewModels.UserModels.UserRegistration
 
 @{
     ViewData["Title"] = "Account";
 }
 
-<h2>Аккаунт</h2>
-
 <div>
-  
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <h3>Личная информация</h3>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        <label asp-for="FirstName" class="control-label"></label>
+                    </dt>
+                    <dd>
+                        <label>@Model.FirstName</label>
+                    </dd>
+                    <dt>
+                        <label asp-for="LastName" class="control-label"></label>
+                    </dt>
+                    <dd>
+                        <label>@Model.LastName</label>
+                    </dd>
+                    <dt>
+                        <label asp-for="Email" class="control-label"></label>
+                    </dt>
+                    <dd>
+                        <label>@Model.Email</label>
+                    </dd>
+                    <dt>
+                        <label asp-for="Password" class="control-label"></label>
+                    </dt>
+                    <dd>
+                        <label>@Model.Password</label>
+                    </dd>
+                </dl>               
+
+            </div>
+        </div>
+    </div>
+
+   
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Назад</a>
+    <a asp-controller="Home" asp-action="Index">Назад</a>
 </div>

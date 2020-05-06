@@ -4,7 +4,8 @@ using AutoMapper;
 using BookAndRent.Models.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 using BookAndRent.Repository;
-using BookAndRent.Views.ViewModels;
+using BookAndRent.Views.ViewModels.ApartmentModels;
+using BookAndRent.Views.ViewModels.UserModels;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Http;
@@ -50,7 +51,7 @@ namespace BookAndRent.Controllers
             {
                 ApartmentId = newApartment.Id,
                 Facilities = Enum.GetNames(typeof(Models.Intefaces.Facility))
-                .Select(a => new Views.ViewModels.Facility
+                .Select(a => new Views.ViewModels.ApartmentModels.Facility
                 {
                     Title = a
                 })
