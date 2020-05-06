@@ -16,6 +16,12 @@ namespace BookAndRent.Mapping
 
             CreateMap<IUser, Views.ViewModels.UserModels.UserRegistration>();
 
+            CreateMap<Views.ViewModels.UserModels.AccountInfo, IUser>()
+               .ConstructUsing(viewEntity => DependencyContainer.Resolve<IUser>());
+
+            CreateMap<IUser, Views.ViewModels.UserModels.AccountInfo>();
+
+
             CreateMap<Views.ViewModels.ApartmentModels.CreateApartment, IApartment>()
                 .ConstructUsing(viewEntity => DependencyContainer.Resolve<IApartment>());
 
@@ -51,7 +57,10 @@ namespace BookAndRent.Mapping
                       .Where(option => (src.Facilities & option) == option && option != Facility.None)
                       .Select(option => new Views.ViewModels.ApartmentModels.Facility { Title = option.ToString() })));
 
+            CreateMap<IContract, Views.ViewModels.UserModels.Contract>();
 
+            CreateMap<Views.ViewModels.UserModels.Contract, IContract>()
+                .ConstructUsing(viewEntity => DependencyContainer.Resolve<IContract>());
         }
     }
 }

@@ -153,7 +153,7 @@ namespace BookAndRent.Controllers
 
             var availableApartments = Repository.Apartments
                .Search(
-                   ap => ap.SleepingPlaces >= searchModel.SleepingPlaces
+                   ap => ap.SleepingPlaces >= searchModel.GuestsNumber
                    && ap.Address.Contains(searchModel.Address)
                    && ap.IsDateAvailable(searchModel.CheckIn, searchModel.CheckOut)
                    )
@@ -164,18 +164,52 @@ namespace BookAndRent.Controllers
                    Title = apartment.Title,
                    CostPerNight = apartment.CostPerNight,
                    Coordinates = apartment.Coordinates,
-                   Pictures = apartment.Pictures.Select(pict => Mapper.Map<ApartmentPicture>(pict)).ToList()
-                });
+                   Pictures = apartment.Pictures.Select(pict => Mapper.Map<ApartmentPicture>(pict)).ToList(),
+                   CheckIn = searchModel.CheckIn,
+                   CheckOut = searchModel.CheckOut,
+                   GuestsNumber = searchModel.GuestsNumber,
+                   Amount = (searchModel.CheckOut - searchModel.CheckIn).Duration().Days * apartment.CostPerNight
+               });
           
             return View("AvailableApartments", availableApartments);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("RentApartmentInfo")]
+        public IActionResult RentApartmentInfo(int id, DateTime CheckIn, DateTime CheckOut, decimal Amount, int GuestsNumber)
+        {
+            var apartment = Repository.Apartments.FindById(id);
+            var apartmentInfo = Mapper.Map<AvailableApartmentInfo>(apartment);
+            apartmentInfo.CheckIn = CheckIn;
+            apartmentInfo.CheckOut = CheckOut;
+            apartmentInfo.Amount = Amount;
+            apartmentInfo.GuestsNumber = GuestsNumber;
+            apartmentInfo.ApartmentId = id;
+            return View("RentApartmentInfo", apartmentInfo);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("Rent")]
+        public IActionResult Rent(int id, DateTime CheckIn, DateTime CheckOut, decimal Amount)
+        {
+            var Renter = Repository.Users.Search(user => user.Email == User.Identity.Name).FirstOrDefault();
+            var apartment = Repository.Apartments.FindById(id);
+            var contract = apartment.Rent(Renter, CheckIn, CheckOut, Amount);
+
+            Repository.Contracts.Add(contract);
+            Repository.Save();
+
+            return RedirectToAction("Account", "User");
         }
 
         [AllowAnonymous]
         [HttpGet("ApartmentInfo")]
         public IActionResult ApartmentInfo(int id)
         {
-            var apartment = Repository.Apartments.FindById(id);            
-            return View("ApartmentInfo", Mapper.Map<AvailableApartmentInfo>(apartment));
+            var apartment = Repository.Apartments.FindById(id);
+            var apartmentInfo = Mapper.Map<AvailableApartmentInfo>(apartment);
+            apartmentInfo.ApartmentId = id;
+            return View("ApartmentInfo", apartmentInfo);
         }
     }
 }

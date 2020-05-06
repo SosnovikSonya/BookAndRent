@@ -20,11 +20,7 @@ namespace BookAndRent.Models.Intefaces
         IUser HouseHolder { get; set; }
 
         bool IsDateAvailable(DateTime start, DateTime end);
-        
-        /// <summary>
-        /// Rent means receive something from somebody
-        /// </summary>
-        /// <returns></returns>
-        IContract Rent(IUser renter, DateTime start, DateTime end);
+
+        IContract Rent(IUser renter, DateTime start, DateTime end, decimal Amount);
     }
 }

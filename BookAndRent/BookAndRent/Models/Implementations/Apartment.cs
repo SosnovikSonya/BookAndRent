@@ -16,7 +16,6 @@ namespace BookAndRent.Models.Implementations
         public int SleepingPlaces { get; set; }
         public int RoomAmount { get; set; }
         public List<IComment> Comments { get; set; }
-        //public List<IFacility> Facilities { get; set; }
         public Facility? Facilities { get; set; }
         public List<IPicture> Pictures { get; set; }
         public List<IAvailableDate> AvailableDates { get; set; }
@@ -26,7 +25,6 @@ namespace BookAndRent.Models.Implementations
         public Apartment()
         {
             Comments = new List<IComment>();
-            //Facilities = new List<IFacility>();
             Pictures = new List<IPicture>();
             AvailableDates = new List<IAvailableDate>();
             Contracts = new List<IContract>();
@@ -50,12 +48,17 @@ namespace BookAndRent.Models.Implementations
                 {
                     return false;
                 }
+
+                if (start < contract.CheckIn && end > contract.CheckOut)
+                {
+                    return false;
+                }
             }
 
             return true;
         }
 
-        public IContract Rent(IUser renter, DateTime start, DateTime end)
+        public IContract Rent(IUser renter, DateTime start, DateTime end, decimal Amount)
         {
             var contract = new Contract
             {
@@ -64,7 +67,8 @@ namespace BookAndRent.Models.Implementations
                 CheckOut = end,
                 HolderId = HouseHolder.Id,
                 ContractDate = DateTime.UtcNow,
-                ApartmentId = Id
+                ApartmentId = Id, 
+                Amount = Amount
             };
 
             Contracts.Add(contract);

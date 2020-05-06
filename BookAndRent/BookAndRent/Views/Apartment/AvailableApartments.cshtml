@@ -14,7 +14,6 @@
 
 <h2></h2>
 <div class="row">
-
     <div class="col-md-6">
         <table class="table">
             <tbody>
@@ -30,7 +29,7 @@
                         <th>
                             <form name="forma1">
                                 <h4 align="right">
-                                    <a href='@Url.Action("ApartmentInfo", "Apartment", new {id = item.ApartmentId}, null)'
+                                    <a href='@Url.Action("RentApartmentInfo", "Apartment", new {id = item.ApartmentId, CheckIn = item.CheckIn, CheckOut = item.CheckOut, Amount = item.Amount, GuestNember = item.GuestsNumber}, null)'
                                        align="right" target="_blank" style="color:white;" name="Address">
                                         <span style="color:black;">@item.Address</span>
                                     </a>

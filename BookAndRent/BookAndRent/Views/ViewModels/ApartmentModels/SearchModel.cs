@@ -15,7 +15,7 @@ namespace BookAndRent.Views.ViewModels.ApartmentModels
 
         [DisplayName("Количество гостей")]
         [Required(ErrorMessage = "Пожалуйста, введите количество гостей")]
-        public int SleepingPlaces { get; set; }
+        public int GuestsNumber { get; set; }
 
         [DisplayName("Прибытие")]
         [Required(ErrorMessage = "Пожалуйста, введите дату приезда")]

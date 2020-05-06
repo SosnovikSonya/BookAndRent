@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace BookAndRent.Views.ViewModels.ApartmentModels
@@ -27,5 +28,13 @@ namespace BookAndRent.Views.ViewModels.ApartmentModels
         public List<Comment> Comments { get; set; }
         public string Coordinates { get; set; }
 
+        [DisplayName("Количество гостей")]
+        public int GuestsNumber { get; set; }
+        [DisplayName("Прибытие")]
+        public DateTime CheckIn { get; set; }
+        [DisplayName("Выезд")]
+        public DateTime CheckOut { get; set; }
+        [DisplayName("Итого")]
+        public decimal Amount { get; set; }
     }
 }

@@ -1,0 +1,94 @@
+﻿@model BookAndRent.Views.ViewModels.ApartmentModels.AvailableApartmentInfo
+
+@{
+    ViewData["Title"] = "ApartmentInfo";
+}
+
+<style>
+
+    #a {
+        border-width: 1px;
+        border-color: rgb(190,190,190);
+        border-style: solid;
+        padding: 0px 20px 20px 20px;
+        margin-top: 10px;
+        box-shadow: 0.4em 0.4em 5px rgba(122,122,122,0.5);
+    }
+</style>
+
+
+<div id="a">
+   
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <h2>@Model.Address</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-12">
+                    @foreach (var picture in Model.Pictures)
+                    {
+                        <img style='width:200px; height:200px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(picture.PictureBytes))" />
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <h3>@Model.Title</h3>
+                    <h4>@Model.SleepingPlaces  гостя @Model.RoomAmount комнаты</h4>
+                </div>
+
+                <div class="form-group">
+                    <h5>@Model.Description</h5>
+                </div>
+
+
+                <div class="form-group">
+                    <h3>Удобства</h3>
+                    @foreach (var item in Model.Facilities)
+                    {
+                        <ul>
+                            <li>
+                                <h5> @item.Title</h5>
+                            </li>
+                        </ul>
+                    }
+                </div>
+
+            </div>
+            <div class="col-md-3" id="a">
+                <br />
+                <div class="form-group">
+                    <h4><label asp-for="CheckIn" class="control-label"></label></h4>
+                    @Html.DisplayFor(model => model.CheckIn)
+
+                    <h4><label asp-for="CheckOut" class="control-label"></label></h4>
+                    @Html.DisplayFor(model => model.CheckOut)
+
+                    <h4><label asp-for="CostPerNight" class="control-label"></label></h4>
+                    @Html.DisplayFor(model => model.CostPerNight)
+                    <h4><label asp-for="Amount" class="control-label"></label></h4>
+                    @Html.DisplayFor(model => model.Amount)
+
+
+                </div>
+
+                <div class="form-group">
+                    <input type="button" onclick="location.href= '@Url.Action("Rent", "Apartment", new {id = Model.ApartmentId, CheckIn = Model.CheckIn, CheckOut = Model.CheckOut, Amount = Model.Amount}, null)'" value="Забронировать" class="btn btn-default" />
+                </div>
+
+            </div>
+        </div>
+
+       
+</div>
