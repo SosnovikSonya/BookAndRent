@@ -1,4 +1,4 @@
-﻿@model BookAndRent.Views.ViewModels.UserModels.UserRegistration
+﻿@model BookAndRent.Views.ViewModels.UserModels.AccountInfo
 
 @{
     ViewData["Title"] = "Account";
@@ -8,8 +8,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <h3>Личная информация</h3>
                 <hr />
+                <h3>Личная информация</h3>
+
                 <dl class="dl-horizontal">
                     <dt>
                         <label asp-for="FirstName" class="control-label"></label>
@@ -35,15 +36,116 @@
                     <dd>
                         <label>@Model.Password</label>
                     </dd>
-                </dl>               
+                </dl>
+                <div>
+                    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
 
+                </div>
             </div>
         </div>
     </div>
 
-   
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <hr />
+                <h3>Мои поездки</h3>
+                <table class="table">
+                    <tr>
+                        <th>
+                            <h5>Куда</h5>
+                        </th>
+                        <th>
+                            <h5>Дата заезда</h5>
+                        </th>
+                        <th>
+                            <h5>Дата отъезда</h5>
+                        </th>
+                        <th>
+                            <h5>Сумма итого</h5>
+                        </th>
+                        <th>
+                            <h5>Дата заключения контракта</h5>
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Contracts)
+                     {
+                         <tr>
+                             <th>
+                                
+                             </th>
+                             <th>
+                                 @item.CheckIn
+                             </th>
+                             <th>
+                                 @item.CheckOut
+                             </th>
+                             <th>
+                                 @item.Amount
+                             </th>
+                             <th>
+                                 @item.ContractDate
+                             </th>
+                         </tr>
+                     }
+                </table>
+              
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <hr />
+                <h3>Моя недвижимость</h3>
+                <table class="table">
+                    <tr>
+                        <th> </th>
+                        <th>
+                            <h5>Адрес</h5>
+                        </th>
+                        <th>
+                            <h5>Название</h5>
+                        </th>
+                        <th>
+                            <h5>Количество комнат</h5>
+                        </th>
+                        <th>
+                            <h5>Количество спальных мест</h5>
+                        </th>
+                        <th>
+                            <h5>Стоимость одной ночи</h5>
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Apartments)
+                    {
+                         <tr>
+                         
+                             <th>
+                                 @item.Address
+                             </th>
+                             <th>
+                                 @item.Title
+                             </th>
+                             <th>
+                                 @item.RoomAmount
+                             </th>
+                             <th>
+                                 @item.SleepingPlaces
+                             </th>
+                             <th>
+                                 @item.CostPerNight
+                             </th>
+                             <th>
+                                 <input type="button" value="Подробнее"  onclick="location.href='@Url.Action("ApartmentInfo", "Apartment", new {id = item.ApartmentId}, null)'"/>
+                             </th>
+                         </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
     <a asp-controller="Home" asp-action="Index">Назад</a>
 </div>
+

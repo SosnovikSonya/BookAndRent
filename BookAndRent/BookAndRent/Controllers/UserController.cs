@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Contract = BookAndRent.Views.ViewModels.UserModels.Contract;
 
 namespace BookAndRent.Controllers
 {
@@ -97,10 +98,28 @@ namespace BookAndRent.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var log = User.Identity.Name;
-                var us = Repository.Users.Search(user => user.Email == log).SingleOrDefault();
+                var us = Repository.Users.Search(user => user.Email == User.Identity.Name).SingleOrDefault();
+                AccountInfo AccountUser = Mapper.Map<AccountInfo>(us);
 
-                UserRegistration AccountUser = Mapper.Map<UserRegistration>(us);
+                var RepositoryContracts = Repository.Contracts.Search(contract => contract.RenterId == us.Id).ToList();
+                var Contracts = new List<Contract>();
+                foreach (var item in RepositoryContracts)
+                {
+                    
+                    Contracts.Add(Mapper.Map<Contract>(item));
+                }
+                AccountUser.Contracts = Contracts;
+
+                var RepositoryApartments = Repository.Apartments.Search(ap => ap.HouseHolder.Id == us.Id).ToList();
+                var Apartments = new List<AvailableApartmentInfo>();
+                foreach (var item in RepositoryApartments)
+                {
+                    var apartment = Mapper.Map<AvailableApartmentInfo>(item);
+                    apartment.ApartmentId = item.Id;
+                    Apartments.Add(apartment);
+                }
+
+                AccountUser.Apartments = Apartments;
                 return View(AccountUser);
             }
             else

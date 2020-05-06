@@ -4,10 +4,22 @@
     ViewData["Title"] = "ApartmentInfo";
 }
 
+<style>
 
-<br />
+    #a {
+        border-width: 1px;
+        border-color: rgb(190,190,190);
+        border-style: solid;
+        padding: 0px 20px 20px 20px;
+        margin-top: 10px;
+        box-shadow: 0.4em 0.4em 5px rgba(122,122,122,0.5);
+    }
+</style>
 
-<div>
+
+<div id="a">
+
+
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -26,45 +38,42 @@
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="row">
-    <div class="col-md-8" >
-        <div class="form-group">
-            <h3>@Model.Title</h3>
-            <h5>@Model.SleepingPlaces  гостя @Model.RoomAmount комнаты</h5>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <h3>@Model.Title</h3>
+                <h4>@Model.SleepingPlaces  гостя @Model.RoomAmount комнаты</h4>
+            </div>
+
+            <div class="form-group">
+                <h5>@Model.Description</h5>
+            </div>
+
+
+            <div class="form-group">
+                <h3>Удобства</h3>
+                @foreach (var item in Model.Facilities)
+                {
+                    <ul>
+                        <li>
+                            <h5> @item.Title</h5>
+                        </li>
+                    </ul>
+                }
+            </div>
+
         </div>
-
-        <div class="form-group">
-            <h4>@Model.Description</h4>
-        </div>
-
       
-        <div class="form-group">
-            <h3>Удобства</h3>
-            @foreach (var item in Model.Facilities)
-            {
-                <ul>
-                    <li>
-                        @item.Title
-                    </li>
-                </ul>
-            }
-        </div>
+
+            <div class="form-group">
+                <input type="button" onclick="location.href= '@Url.Action("Rent", "Apartment", new {id = Model.ApartmentId, CheckIn = Model.CheckIn, CheckOut = Model.CheckOut, Amount = Model.Amount}, null)'" value="Забронировать" class="btn btn-default" />
+            </div>
 
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-3">
-        <br /><br />
-        <div class="form-group">
-            <label asp-for="CostPerNight" class="control-label"></label>
-            @Html.DisplayFor(model => model.CostPerNight)
-        </div>
+ 
 
-        <div class="form-group">
-            <input type="submit" value="Забронировать" class="btn btn-default" />
-        </div>
 
-    </div>
 </div>
