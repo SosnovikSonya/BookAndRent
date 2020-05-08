@@ -1,7 +1,9 @@
 using BookAndRent.Models.Implementations;
+using BookAndRent.Models.Intefaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookAndRent.Test
 {
@@ -145,6 +147,81 @@ namespace BookAndRent.Test
         {
             var isAvailable = apartment.IsDateAvailable(availableEndDate1, availableEndDate1.AddDays(6));
             Assert.IsFalse(isAvailable);
+        }
+
+        [TestMethod]
+        public void CheckContractStatus_DateGreaterThenCheckout_ReturnsCompleted()
+        {
+            var contract = new Contract
+            {
+                CheckIn = contractStartDate,
+                CheckOut = contractEndDate,
+                ContractStatus = ContractStatus.New
+            };
+            var dateNow = DateTime.UtcNow;
+
+            var actualStatus = contract.GetCurrentStatus(dateNow);
+            Assert.AreEqual(ContractStatus.Completed, actualStatus);
+        }
+
+        [TestMethod]
+        public void CheckContractStatus_DateInRange_ReturnsInProgress()
+        {
+            var contract = new Contract
+            {
+                CheckIn = contractStartDate,
+                CheckOut = contractEndDate,
+                ContractStatus = ContractStatus.Approved
+            };
+            var dateNow = contractStartDate.AddDays(1);
+
+            var actualStatus = contract.GetCurrentStatus(dateNow);
+            Assert.AreEqual(ContractStatus.InProgress, actualStatus);
+        }
+
+        [TestMethod]
+        public void CheckContractStatus_DateLessThenCheckin_ReturnsTheSame()
+        {
+            var contract = new Contract
+            {
+                CheckIn = contractStartDate,
+                CheckOut = contractEndDate,
+                ContractStatus = ContractStatus.Approved
+            };
+            var dateNow = contractStartDate.AddDays(-1);
+
+            var actualStatus = contract.GetCurrentStatus(dateNow);
+            Assert.AreEqual(contract.ContractStatus, actualStatus);
+        }
+
+        [TestMethod]
+        public void CheckContractStatus_DateInRangeAlreadyRejected_ReturnsRejected()
+        {
+            var contract = new Contract
+            {
+                CheckIn = contractStartDate,
+                CheckOut = contractEndDate,
+                ContractStatus = ContractStatus.Rejected
+            };
+            var dateNow = contractStartDate.AddDays(1);
+
+            var actualStatus = contract.GetCurrentStatus(dateNow);
+            Assert.AreEqual(contract.ContractStatus, actualStatus);
+        }
+
+        [TestMethod]
+        public void CheckContractStatus_DateGreaterThenCheckoutAlreadyRejected_ReturnsRejected()
+        {
+            var contract = new Contract
+            {
+                CheckIn = contractStartDate,
+                CheckOut = contractEndDate,
+                ContractStatus = ContractStatus.Rejected
+            };
+            var dateNow = contractEndDate.AddDays(1);
+
+            var actualStatus = contract.GetCurrentStatus(dateNow);
+            Assert.AreEqual(contract.ContractStatus, actualStatus);
         }
     }    
 }
