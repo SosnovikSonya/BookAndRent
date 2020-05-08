@@ -95,7 +95,6 @@ namespace BookAndRent.Controllers
 
             if (formCollection.Files.Count != 0)
             {
-                //var formPicture = formCollection.Files.Single();
                 byte[] imageData = null;
 
                 foreach (var formPicture in formCollection.Files)
@@ -259,6 +258,34 @@ namespace BookAndRent.Controllers
             Repository.Contracts.Modify(contract);
             Repository.Save();
           
+            return RedirectToAction("Account", "User");
+        }
+
+        [HttpGet("AddCommentView/{id}")]
+        public IActionResult AddCommentView([FromRoute]int id)
+        {
+            var contract = Repository.Contracts.FindById(id);
+            var contractInfo = Mapper.Map<Contract>(contract);
+            return View("AddComment", contractInfo);
+        }
+
+        [HttpPost("AddComment")]
+        public IActionResult AddComment(IFormCollection formCollection)
+        {
+            var us = Repository.Users.Search(user => user.Email == User.Identity.Name).FirstOrDefault();
+            var comment = new Comment
+            {
+
+                ApartmentId = int.Parse(formCollection["ApartmentId"].Single()),
+                CommentatorId = us.Id,
+                Content = formCollection["Content"].Single(),
+                Date = DateTime.UtcNow
+
+            };
+
+            var newComment = Mapper.Map<IComment>(comment);
+            Repository.Comments.Add(newComment);
+            Repository.Save();
             return RedirectToAction("Account", "User");
         }
     }

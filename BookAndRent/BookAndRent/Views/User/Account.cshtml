@@ -37,10 +37,7 @@
                         <label>@Model.Password</label>
                     </dd>
                 </dl>
-                <div>
-                    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
 
-                </div>
             </div>
         </div>
     </div>
@@ -70,32 +67,42 @@
                         <th>
                             <h5>Статус</h5>
                         </th>
+                        <th>
+
+                        </th>
                     </tr>
                     @foreach (var item in Model.Contracts)
-                     {
-                    <tr>
-                        <th>
-                            @item.Apartment.Address
-                        </th>
-                        <th>
-                            @item.CheckIn
-                        </th>
-                        <th>
-                            @item.CheckOut
-                        </th>
-                        <th>
-                            @item.Amount
-                        </th>
-                        <th>
-                            @item.ContractDate
-                        </th>
-                        <th>
-                            @item.ContractStatus.Status
-                        </th>
-                    </tr>
-                     }
+                    {
+                        <tr>
+                            <th>
+                                @item.Apartment.Address
+                            </th>
+                            <th>
+                                @item.CheckIn
+                            </th>
+                            <th>
+                                @item.CheckOut
+                            </th>
+                            <th>
+                                @item.Amount
+                            </th>
+                            <th>
+                                @item.ContractDate
+                            </th>
+                            <th>
+                                @item.ContractStatus.Status
+                            </th>
+                            <th>
+                                @if (item.ContractStatus.Status == "InProgress" && item.ContractStatus.Status == "Comleted")
+                                {
+                                    <input type="button" value="Оставить комментарий" onclick="location.href='@Url.Action("AddCommentView", "Apartment", new {id = item.ApartmentId}, null)'" />
+                                }
+
+                            </th>
+                        </tr>
+                    }
                 </table>
-              
+
             </div>
         </div>
     </div>
@@ -107,7 +114,7 @@
                 <h3>Моя недвижимость</h3>
                 <table class="table">
                     <tr>
-                       
+
                         <th>
                             <h5>Адрес</h5>
                         </th>
@@ -123,30 +130,31 @@
                         <th>
                             <h5>Стоимость одной ночи</h5>
                         </th>
+                        <th></th>
                     </tr>
                     @foreach (var item in Model.Apartments)
                     {
-                         <tr>
-                         
-                             <th>
-                                 @item.Address
-                             </th>
-                             <th>
-                                 @item.Title
-                             </th>
-                             <th>
-                                 @item.RoomAmount
-                             </th>
-                             <th>
-                                 @item.SleepingPlaces
-                             </th>
-                             <th>
-                                 @item.CostPerNight
-                             </th>
-                             <th>
-                                 <input type="button" value="Подробнее"  onclick="location.href='@Url.Action("ApartmentInfo", "Apartment", new {id = item.ApartmentId}, null)'"/>
-                             </th>
-                         </tr>
+                        <tr>
+
+                            <th>
+                                @item.Address
+                            </th>
+                            <th>
+                                @item.Title
+                            </th>
+                            <th>
+                                @item.RoomAmount
+                            </th>
+                            <th>
+                                @item.SleepingPlaces
+                            </th>
+                            <th>
+                                @item.CostPerNight
+                            </th>
+                            <th>
+                                <input type="button" value="Подробнее" onclick="location.href='@Url.Action("ApartmentInfo", "Apartment", new {id = item.ApartmentId}, null)'" />
+                            </th>
+                        </tr>
                     }
                 </table>
             </div>

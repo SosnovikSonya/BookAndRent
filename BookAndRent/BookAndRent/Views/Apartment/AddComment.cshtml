@@ -1,0 +1,29 @@
+﻿@model BookAndRent.Views.ViewModels.UserModels.Contract
+
+@{
+    ViewData["Title"] = "AddComment";
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <h4>Оставить комментарий</h4>
+        <form asp-action="AddComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <input asp-for="ApartmentId" class="form-control" name="ApartmentId" type="hidden" value="@Model.ApartmentId" />
+            </div>
+           
+            <div class="form-group">
+                <textarea rows="5" cols="40" name="Content"></textarea>            
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Отправить" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

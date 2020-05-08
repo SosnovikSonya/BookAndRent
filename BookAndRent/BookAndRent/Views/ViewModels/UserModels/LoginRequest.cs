@@ -6,12 +6,10 @@ namespace BookAndRent.Views.ViewModels.UserModels
 {
     public class LoginRequest
     {
-        [DisplayName("Логин")]
-        [Required(ErrorMessage = "Пожалуйста, введите логин.")]
+        [DisplayName("Email")]
         public string Email { get; set; }
         [DisplayName("Пароль")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Пожалуйста, введите пароль.")]
         public string Password { get; set; }
     }
 }
