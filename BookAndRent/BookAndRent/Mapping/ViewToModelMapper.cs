@@ -27,6 +27,14 @@ namespace BookAndRent.Mapping
 
             CreateMap<IApartment, Views.ViewModels.ApartmentModels.CreateApartment>();
 
+            CreateMap<Views.ViewModels.ApartmentModels.UpdateApartment, IApartment>()
+                .ForMember(apartment => apartment.Id, mapper => mapper.MapFrom(src => src.ApartmentId))
+               .ConstructUsing(viewEntity => DependencyContainer.Resolve<IApartment>());
+
+            CreateMap<IApartment, Views.ViewModels.ApartmentModels.UpdateApartment>()
+                .ForMember(apartment => apartment.ApartmentId, mapper => mapper.MapFrom(src => src.Id));
+
+
             CreateMap<IPicture, Views.ViewModels.ApartmentModels.ApartmentPicture>();
 
             CreateMap<Views.ViewModels.ApartmentModels.ApartmentPicture, IPicture>()
@@ -54,10 +62,22 @@ namespace BookAndRent.Mapping
                 .ForMember(apartment => apartment.Facilities, mapper => mapper.MapFrom(src =>
                     Enum.GetValues(typeof(Facility))
                       .Cast<Facility>()
-                      .Where(option => (src.Facilities & option) == option && option != Facility.None)
+                      .Where(option => (src.Facilities & option) == option)
                       .Select(option => new Views.ViewModels.ApartmentModels.Facility { Title = option.ToString() })));
 
-            CreateMap<IContract, Views.ViewModels.UserModels.Contract>();
+            CreateMap<IApartment, Views.ViewModels.ApartmentModels.ApartmentInfo>()
+               .ForMember(apartment => apartment.Comments, mapper => mapper.MapFrom(src => src.Comments))
+               .ForMember(apartment => apartment.Pictures, mapper => mapper.MapFrom(src => src.Pictures))
+               .ForMember(apartment => apartment.Facilities, mapper => mapper.MapFrom(src =>
+                   Enum.GetValues(typeof(Facility))
+                     .Cast<Facility>()
+                     .Where(option => (src.Facilities & option) == option)
+                     .Select(option => new Views.ViewModels.ApartmentModels.Facility { Title = option.ToString() })));
+
+
+            CreateMap<IContract, Views.ViewModels.UserModels.Contract>()
+                .ForMember(contract => contract.ContractStatus, mapper => mapper.MapFrom(src => 
+                new Views.ViewModels.ApartmentModels.ContractStatus { Status = src.ContractStatus.ToString() }));
 
             CreateMap<Views.ViewModels.UserModels.Contract, IContract>()
                 .ConstructUsing(viewEntity => DependencyContainer.Resolve<IContract>());

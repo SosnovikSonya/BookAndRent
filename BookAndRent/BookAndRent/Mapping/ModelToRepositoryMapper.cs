@@ -49,9 +49,12 @@ namespace BookAndRent.Mapping
                 .ForMember(iApartment => iApartment.Contracts, mapper => mapper.MapFrom(src => src.Contracts))
                 .ForMember(iApartment => iApartment.Pictures, mapper => mapper.MapFrom(src => src.Pictures));
 
-            CreateMap<IContract, Contract>();
+            CreateMap<IContract, Contract>()
+                .ForMember(contract => contract.ContractStatus, mapper => mapper.MapFrom(src => src.ContractStatus));
+
 
             CreateMap<Contract, IContract>()
+                .ForMember(icontract => icontract.ContractStatus, mapper => mapper.MapFrom(src => src.ContractStatus))
                 .ConstructUsing(dbEntity => DependencyContainer.Resolve<IContract>());
         }
     }
