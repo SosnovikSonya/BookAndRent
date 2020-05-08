@@ -67,26 +67,32 @@
                         <th>
                             <h5>Дата заключения контракта</h5>
                         </th>
+                        <th>
+                            <h5>Статус</h5>
+                        </th>
                     </tr>
                     @foreach (var item in Model.Contracts)
                      {
-                         <tr>
-                             <th>
-                                
-                             </th>
-                             <th>
-                                 @item.CheckIn
-                             </th>
-                             <th>
-                                 @item.CheckOut
-                             </th>
-                             <th>
-                                 @item.Amount
-                             </th>
-                             <th>
-                                 @item.ContractDate
-                             </th>
-                         </tr>
+                    <tr>
+                        <th>
+                            @item.Apartment.Address
+                        </th>
+                        <th>
+                            @item.CheckIn
+                        </th>
+                        <th>
+                            @item.CheckOut
+                        </th>
+                        <th>
+                            @item.Amount
+                        </th>
+                        <th>
+                            @item.ContractDate
+                        </th>
+                        <th>
+                            @item.ContractStatus.Status
+                        </th>
+                    </tr>
                      }
                 </table>
               
@@ -101,7 +107,7 @@
                 <h3>Моя недвижимость</h3>
                 <table class="table">
                     <tr>
-                        <th> </th>
+                       
                         <th>
                             <h5>Адрес</h5>
                         </th>

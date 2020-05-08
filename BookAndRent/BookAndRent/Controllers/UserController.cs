@@ -99,28 +99,41 @@ namespace BookAndRent.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var us = Repository.Users.Search(user => user.Email == User.Identity.Name).SingleOrDefault();
-                AccountInfo AccountUser = Mapper.Map<AccountInfo>(us);
+                var accountUser = Mapper.Map<AccountInfo>(us);
 
-                var RepositoryContracts = Repository.Contracts.Search(contract => contract.RenterId == us.Id).ToList();
-                var Contracts = new List<Contract>();
-                foreach (var item in RepositoryContracts)
+                var repositoryContracts = Repository.Contracts.Search(contract => contract.RenterId == us.Id).ToList();
+
+                foreach (var contract in repositoryContracts)
                 {
-                    
-                    Contracts.Add(Mapper.Map<Contract>(item));
+                    contract.ContractStatus = contract.GetCurrentStatus(DateTime.UtcNow);
+                    Repository.Contracts.Modify(contract);
                 }
-                AccountUser.Contracts = Contracts;
+                Repository.Save();
+                repositoryContracts = Repository.Contracts.Search(contract => contract.RenterId == us.Id).ToList();
 
-                var RepositoryApartments = Repository.Apartments.Search(ap => ap.HouseHolder.Id == us.Id).ToList();
-                var Apartments = new List<AvailableApartmentInfo>();
-                foreach (var item in RepositoryApartments)
+                var contracts = new List<Contract>();
+                foreach (var item in repositoryContracts)
+                {
+                    contracts.Add(Mapper.Map<Contract>(item));
+                }
+                foreach (var item in contracts)
+                {
+                    var apart = Mapper.Map<AvailableApartmentInfo>(Repository.Apartments.Search(ap => ap.Id == item.ApartmentId).FirstOrDefault());
+                    item.Apartment = apart;
+                }
+                accountUser.Contracts = contracts;
+
+                var repositoryApartments = Repository.Apartments.Search(ap => ap.HouseHolder.Id == us.Id).ToList();
+                var apartments = new List<AvailableApartmentInfo>();
+                foreach (var item in repositoryApartments)
                 {
                     var apartment = Mapper.Map<AvailableApartmentInfo>(item);
                     apartment.ApartmentId = item.Id;
-                    Apartments.Add(apartment);
+                    apartments.Add(apartment);
                 }
 
-                AccountUser.Apartments = Apartments;
-                return View(AccountUser);
+                accountUser.Apartments = apartments;
+                return View(accountUser);
             }
             else
             {
