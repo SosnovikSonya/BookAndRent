@@ -11,5 +11,8 @@ namespace BookAndRent.Models.Intefaces
         DateTime CheckIn { get; set; }
         DateTime CheckOut { get; set; }
         decimal Amount { get; set; }
+        ContractStatus ContractStatus { get; set; }
+
+        ContractStatus GetCurrentStatus(DateTime dateNow);
     }
 }

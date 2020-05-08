@@ -22,6 +22,8 @@ namespace BookAndRent.Repository.SqlRepository
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
         public decimal Amount { get; set; }
+        public ContractStatus ContractStatus { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }
