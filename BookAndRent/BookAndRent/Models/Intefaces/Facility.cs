@@ -4,8 +4,7 @@ namespace BookAndRent.Models.Intefaces
 {
     public enum Facility
     {
-        None = 0,
-        WiFi = 1,
+        None = 1,
         Лифт = 2,
         Фен = 4,
         Утюг = 8,
@@ -14,7 +13,7 @@ namespace BookAndRent.Models.Intefaces
         Парковка = 64,
         Телевизор = 128,
         Кондиционер = 256,
-        Кабельное = 512
-
+        Кабельное = 512,
+        WiFi = 1024,
     }
 }

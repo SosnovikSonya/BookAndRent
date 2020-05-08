@@ -36,5 +36,7 @@ namespace BookAndRent.Views.ViewModels.ApartmentModels
         public DateTime CheckOut { get; set; }
         [DisplayName("Итого")]
         public decimal Amount { get; set; }
+
+
     }
 }

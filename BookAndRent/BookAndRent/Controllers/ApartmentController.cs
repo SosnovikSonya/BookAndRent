@@ -58,13 +58,7 @@ namespace BookAndRent.Controllers
             };      
             
             return View("AddFacilities", apartmentFacilities);
-        }
-
-        [HttpGet("AddFacilities")]
-        public IActionResult GetAddFacilitiesView()
-        {
-            return View("AddFacilities");
-        }
+        }        
 
         [HttpPost("AddFacilities")]
         public IActionResult AddFacilities(IFormCollection formCollection)
@@ -73,24 +67,23 @@ namespace BookAndRent.Controllers
                 .Search(ap => ap.Id.ToString() == formCollection["ApartmentId"].Single()).Single();
 
             var facility = Models.Intefaces.Facility.None;
-            var a = formCollection["facility"].Select(facilityStr => Enum.Parse<Models.Intefaces.Facility>(facilityStr));
-            foreach (var item in a)
+            var selectedFacilities = formCollection["facility"].Select(facilityStr => Enum.Parse<Models.Intefaces.Facility>(facilityStr));
+            if (selectedFacilities.Count() != 0)
             {
-                facility = facility | item;
-            }
+                foreach (var item in selectedFacilities)
+                {
+                    facility = facility | item;
+                }
+                facility = facility & ~Models.Intefaces.Facility.None;
+            }          
+           
             apartment.Facilities = facility;
 
             Repository.Apartments.Modify(apartment);
             Repository.Save();
 
-            return View("AddPictures", new ApartmentInfo { ApartmentId = int.Parse(formCollection["ApartmentId"].Single())});
-        }
-
-        [HttpGet("AddPictures")]
-        public IActionResult GetAddPicturesView()
-        {
-            return View("AddPictures");
-        }
+            return View("AddPictures", new ApartmentIdentifier { ApartmentId = apartment.Id});
+        }       
 
         [HttpPost("AddPictures")]
         public IActionResult AddPictures(IFormCollection formCollection)
@@ -119,15 +112,8 @@ namespace BookAndRent.Controllers
                 }                
             }
 
-            return View("AddAvailableDates", new ApartmentInfo { ApartmentId = int.Parse(formCollection["ApartmentId"].Single()) });
-        }
-
-        [HttpGet("AddAvailableDates")]
-        public IActionResult GetAddAvailableDatesView()
-        {
-
-            return View("AddAvailableDates");
-        }
+            return View("AddAvailableDates", new ApartmentIdentifier { ApartmentId = int.Parse(formCollection["ApartmentId"].Single()) });
+        }        
 
         [HttpPost("AddAvailableDates")]
         public IActionResult AddAvailableDates(IFormCollection formCollection)
@@ -173,8 +159,7 @@ namespace BookAndRent.Controllers
           
             return View("AvailableApartments", availableApartments);
         }
-
-        [AllowAnonymous]
+        
         [HttpGet("RentApartmentInfo")]
         public IActionResult RentApartmentInfo(int id, DateTime CheckIn, DateTime CheckOut, decimal Amount, int GuestsNumber)
         {
@@ -188,28 +173,93 @@ namespace BookAndRent.Controllers
             return View("RentApartmentInfo", apartmentInfo);
         }
 
-        [AllowAnonymous]
         [HttpGet("Rent")]
         public IActionResult Rent(int id, DateTime CheckIn, DateTime CheckOut, decimal Amount)
         {
             var Renter = Repository.Users.Search(user => user.Email == User.Identity.Name).FirstOrDefault();
             var apartment = Repository.Apartments.FindById(id);
             var contract = apartment.Rent(Renter, CheckIn, CheckOut, Amount);
-
             Repository.Contracts.Add(contract);
             Repository.Save();
 
             return RedirectToAction("Account", "User");
         }
-
-        [AllowAnonymous]
+       
         [HttpGet("ApartmentInfo")]
         public IActionResult ApartmentInfo(int id)
         {
+            var repositoryContracts = Repository.Contracts.Search(contract => contract.ApartmentId == id);
+            for (int i = 0; i < repositoryContracts.Count(); i++)
+            {
+                var contract = repositoryContracts.ElementAt(i);
+                contract.ContractStatus = contract.GetCurrentStatus(DateTime.UtcNow);
+                Repository.Contracts.Modify(contract);
+            }
+            
+            Repository.Save();
+
             var apartment = Repository.Apartments.FindById(id);
-            var apartmentInfo = Mapper.Map<AvailableApartmentInfo>(apartment);
+            var apartmentInfo = Mapper.Map<ApartmentInfo>(apartment);
             apartmentInfo.ApartmentId = id;
+            apartmentInfo.Contracts = Repository.Contracts
+                .Search(contract => contract.ApartmentId == id)
+                .Select(contract => Mapper.Map<Contract>(contract))
+                .ToList();
+            foreach (var contract in apartmentInfo.Contracts)
+            {
+                contract.Renter = Mapper.Map<UserRegistration>(Repository.Users.FindById(contract.RenterId));
+            }
             return View("ApartmentInfo", apartmentInfo);
+        }
+
+        [HttpGet("ApartmentUpdateView/{id}")]
+        public IActionResult GetApartmentUpdateView([FromRoute]int id)
+        {
+            var apartment = Repository.Apartments.FindById(id);
+            var apartmentInfo = Mapper.Map<UpdateApartment>(apartment);
+            return View("ApartmentUpdate", apartmentInfo);
+        }
+
+        [HttpPost("UpdateApartment")]
+        public IActionResult UpdateApartment(UpdateApartment viewAapartment)
+        {
+            var updatedApartment = Mapper.Map<IApartment>(viewAapartment);
+
+            var existingApartment = Repository.Apartments.FindById(updatedApartment.Id);
+            existingApartment.Address = updatedApartment.Address;
+            existingApartment.Coordinates = updatedApartment.Coordinates;
+            existingApartment.Title = updatedApartment.Title;
+            existingApartment.Description = updatedApartment.Description;
+            existingApartment.CostPerNight = updatedApartment.CostPerNight;
+            existingApartment.SleepingPlaces = updatedApartment.SleepingPlaces;
+            existingApartment.RoomAmount = updatedApartment.RoomAmount;
+
+            Repository.Apartments.Modify(existingApartment);
+            Repository.Save();
+
+            var apartmentFacilities = new ApartmentFacilities
+            {
+                ApartmentId = updatedApartment.Id,
+                Facilities = Enum.GetNames(typeof(Models.Intefaces.Facility))
+                .Select(a => new Views.ViewModels.ApartmentModels.Facility
+                {
+                    Title = a,
+                    
+                })
+            };
+
+            return View("AddFacilities", apartmentFacilities);
+        }
+
+        [HttpGet("ContractStatus")]
+        public IActionResult ContractStatus(int id, string status)
+        {
+            var contract = Repository.Contracts.FindById(id);
+            contract.ContractStatus = Enum.Parse<Models.Intefaces.ContractStatus>(status);
+            Repository.Contracts.Modify(contract);
+            Repository.Save();
+          
+            return RedirectToAction("Account", "User");
         }
     }
 }

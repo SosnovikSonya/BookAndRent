@@ -1,4 +1,4 @@
-﻿@model BookAndRent.Views.ViewModels.ApartmentModels.AvailableApartmentInfo
+﻿@model BookAndRent.Views.ViewModels.ApartmentModels.ApartmentInfo
 
 @{
     ViewData["Title"] = "ApartmentInfo";
@@ -24,7 +24,9 @@
         <div class="col-md-12">
             <div class="form-group">
                 <h2>@Model.Address</h2>
+                <input type="button" value="Редактировать" onclick="location.href='@Url.Action("ApartmentUpdateView", "Apartment", new {id = Model.ApartmentId}, null)'" />
             </div>
+
         </div>
     </div>
 
@@ -38,8 +40,6 @@
             </div>
         </div>
     </div>
-
-
 
     <div class="row">
         <div class="col-md-8">
@@ -65,15 +65,75 @@
                 }
             </div>
 
+
+
         </div>
-      
-
-            <div class="form-group">
-                <input type="button" onclick="location.href= '@Url.Action("Rent", "Apartment", new {id = Model.ApartmentId, CheckIn = Model.CheckIn, CheckOut = Model.CheckOut, Amount = Model.Amount}, null)'" value="Забронировать" class="btn btn-default" />
-            </div>
-
     </div>
- 
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <h3>Запросы на аренду</h3>
+                <table class="table">
+                    <tr>
+                        <th>
+                            <h5>Арендатор</h5>
+                        </th>
+                        <th>
+                            <h5>Дата заезда</h5>
+                        </th>
+                        <th>
+                            <h5>Дата отъезда</h5>
+                        </th>
+                        <th>
+                            <h5>Сумма итого</h5>
+                        </th>
+                        <th>
+                            <h5>Дата заключения контракта</h5>
+                        </th>
+                        <th>
+                            <h5>Статус</h5>
+                        </th>
 
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    @foreach (var item in Model.Contracts)
+                    {
+                        <tr>
+                            <th>
+                                @item.Renter.FirstName  @item.Renter.LastName
+                            </th>
+                            <th typeof="Data">
+                                @item.CheckIn
+                            </th>
+                            <th>
+                                @item.CheckOut
+                            </th>
+                            <th>
+                                @item.Amount
+                            </th>
+                            <th>
+                                @item.ContractDate
+                            </th>
+                            <th>
+                                @item.ContractStatus.Status
+                            </th>
+                            @if (@item.ContractStatus.Status == "New")
+                            {
+                                <th>
+                                    <input type="button" onclick="location.href='@Url.Action("ContractStatus", "Apartment", new { id = item.Id, status = "Approved" }, null)'" value="Одобрить" />
+                                </th>
+                                <th>
+                                    <input type="button" onclick="location.href='@Url.Action("ContractStatus", "Apartment", new { id = item.Id, status = "Rejected" }, null)'"  value="Отклонить" />
+                                </th>
+                            }
+
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        </div>
+    </div>
 </div>

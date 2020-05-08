@@ -30,14 +30,16 @@
                             <form name="forma1">
                                 <h4 align="right">
                                     <a href='@Url.Action("RentApartmentInfo", "Apartment", new {id = item.ApartmentId, CheckIn = item.CheckIn, CheckOut = item.CheckOut, Amount = item.Amount, GuestNember = item.GuestsNumber}, null)'
-                                       align="right" target="_blank" style="color:white;" name="Address">
+                                       align="right" target="_blank" style="color:white;" name="Address" id="address">
                                         <span style="color:black;">@item.Address</span>
                                     </a>
                                 </h4>
                             </form>
-                           
+
                             <h5 align="right">@item.Title</h5>
                             <h5 align="right">@item.CostPerNight   руб. за ночь</h5>
+                            <input type="button" align="right" value="Посмотреть на карте" onclick="(renderApartments('@item.CostPerNight', '@item.Address', '@item.Coordinates'))" />
+
                         </th>
 
                     </tr>
@@ -57,18 +59,45 @@
 
 <script type="text/javascript">
 
-
-    ymaps.ready(function () {
+    function renderApartments(cost, addr, coords) {
         var myMap = new ymaps.Map('map', {
-            center: [55.751574, 37.573856],
+            center: [53.886154, 27.516098],
             zoom: 9
-        },
-            {
+        }, {
                 searchControlProvider: 'yandex#search'
-            })
-    });
+        })
 
-  
+        // Создаём макет содержимого.
+        MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+        )
+        coordinates = coords.split(',')
+      
+        var myGeoObject = new ymaps.GeoObject({
+            // Описание геометрии.
+            geometry: {
+                type: "Point",
+                coordinates: coordinates
+            },
+            // Свойства.
+            properties: {
+                // Контент метки.
+                iconContent: cost,
+                hintContent: addr
+            }
+        }, {
+                // Опции.
+                // Иконка метки будет растягиваться под размер ее содержимого.
+                preset: 'islands#blackStretchyIcon',
+                iconColor: '#0095b6',
+                // Метку можно перемещать.
+                draggable: true
+            });
+        myMap.geoObjects
+            .add(myGeoObject)
+
+    }
+
 </script>
 
 

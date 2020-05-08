@@ -1,7 +1,7 @@
 ﻿@model BookAndRent.Views.ViewModels.ApartmentModels.ApartmentFacilities
 
 @{
-    ViewData["Title"] = "Принимайте гостей";
+    ViewData["Title"] = "Редактирование";
 }
 
 <h2>Шаг 2 - Дополнительные удобства</h2>
@@ -17,7 +17,7 @@
                     @foreach (var item in this.Model.Facilities.Where(f => f.Title != "None"))
                     {
                         <li>
-                            <input id="@item.Title" type="checkbox" value="@item.Title" name="facility" />                          
+                            <input id="@item.Title" checked="checked" type="checkbox" value="@item.Title" name="facility" />
                             <label asp-for="@item.Title">@item.Title</label>
                         </li>
                     }
