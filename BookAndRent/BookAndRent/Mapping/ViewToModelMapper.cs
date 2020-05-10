@@ -3,7 +3,6 @@ using BookAndRent.DependencyResolving;
 using BookAndRent.Models.Intefaces;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace BookAndRent.Mapping
 {

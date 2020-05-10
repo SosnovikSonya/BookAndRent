@@ -8,7 +8,7 @@ using System.Linq;
 namespace BookAndRent.Test
 {
     [TestClass]
-    public class AvailableDatesTests
+    public class BookAndRentTests
     {
         private Apartment apartment;
         private DateTime availableStartDate1 = new DateTime(2020, 4, 1);

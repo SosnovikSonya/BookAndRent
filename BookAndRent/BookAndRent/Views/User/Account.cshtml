@@ -93,7 +93,7 @@
                                 @item.ContractStatus.Status
                             </th>
                             <th>
-                                @if (item.ContractStatus.Status == "InProgress" && item.ContractStatus.Status == "Comleted")
+                                @if (item.ContractStatus.Status == "InProgress" && item.ContractStatus.Status == "Completed")
                                 {
                                     <input type="button" value="Оставить комментарий" onclick="location.href='@Url.Action("AddCommentView", "Apartment", new {id = item.ApartmentId}, null)'" />
                                 }

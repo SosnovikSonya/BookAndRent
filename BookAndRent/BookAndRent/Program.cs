@@ -18,8 +18,6 @@ namespace BookAndRent
                 context.Database.EnsureCreated();
                 context.SaveChanges();
 
-                // Uncomment to insert demo data
-                // context.InitializeDemoData();
             }
 
             host.Run();

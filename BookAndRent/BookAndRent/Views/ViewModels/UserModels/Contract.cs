@@ -1,9 +1,6 @@
 ﻿using BookAndRent.Views.ViewModels.ApartmentModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace BookAndRent.Views.ViewModels.UserModels
 {

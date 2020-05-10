@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BookAndRent.Mapping;
+﻿
 using BookAndRent.Models.Implementations;
 using BookAndRent.Models.Intefaces;
 using StructureMap;
